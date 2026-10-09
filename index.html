@@ -1,28 +1,37 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Audio a Señas - By Marco</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Audio a Señas - By Marco</title>
 </head>
-<body style="font-family:sans-serif; text-align:center; padding:20px; background:#f5f5f5;">
+<body style="font-family:sans-serif;text-align:center;padding:20px;background:#111;color:white">
 <h2>🎤 Audio a Lengua de Señas</h2>
 <p>Idea Original de Marco - 08/10/2026</p>
-<button id="grabar" style="padding:20px; font-size:18px; background:green; color:white; border-radius:12px; border:none;">MANTENER PARA GRABAR</button>
-<p id="texto" style="margin-top:20px; font-weight:bold;"></p>
-<div id="senas" style="margin-top:20px; font-size:20px; background:white; padding:15px; border-radius:10px;"></div>
+<button id="grabar" style="padding:30px;font-size:22px;background:#00c800;color:white;border:none;border-radius:20px;width:90%;font-weight:bold">TOCAR PARA HABLAR</button>
+<p id="texto" style="margin-top:20px;font-size:22px;background:white;color:black;padding:15px;border-radius:10px;min-height:50px">Tocá y hablá...</p>
+<div id="senas" style="margin-top:20px;font-size:35px">Las señas aparecen acá</div>
 <script>
 const btn=document.getElementById('grabar');
 const textoP=document.getElementById('texto');
 const senasDiv=document.getElementById('senas');
 let rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
 rec.lang='es-AR';
-btn.onmousedown=()=>{rec.start();textoP.innerText="Escuchando...";};
-btn.onmouseup=()=>{rec.stop();};
+let escuchando=false;
+function iniciar(){if(escuchando)return;rec.start()}
+function parar(){try{rec.stop()}catch(e){}}
+btn.addEventListener('touchstart',(e)=>{e.preventDefault();iniciar()});
+btn.addEventListener('touchend',(e)=>{e.preventDefault();parar()});
+btn.addEventListener('mousedown',iniciar);
+btn.addEventListener('mouseup',parar);
+btn.onclick=()=>{if(escuchando)parar();else iniciar()};
+rec.onstart=()=>{escuchando=true;btn.innerText="🔴 ESCUCHANDO - TOCA PARA PARAR";btn.style.background="red";textoP.innerText="Escuchando...";};
+rec.onend=()=>{escuchando=false;btn.innerText="TOCAR PARA HABLAR";btn.style.background="#00c800";};
 rec.onresult=(e)=>{
  let t=e.results[0][0].transcript;
  textoP.innerText="Dijiste: "+t;
- senasDiv.innerHTML="🤟 Traduciendo a LSA:<br><b style='font-size:24px;'>"+t.toUpperCase()+"</b><br><br>📹 Aquí va el video con avatar en señas";
+ senasDiv.innerHTML="🤟 Traduciendo a LSA:<br><b>"+t.toUpperCase()+"</b> 👏";
 };
+rec.onerror=()=>{escuchando=false;btn.innerText="TOCAR PARA HABLAR";btn.style.background="#00c800";};
 </script>
 </body>
 </html>
