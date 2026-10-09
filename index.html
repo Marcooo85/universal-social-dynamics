@@ -3,55 +3,57 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Universal - Video LSA REAL</title>
+<title>Universal - Video LSA Alta Visibilidad</title>
 <style>
 *{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}
-body{background:#070712;color:white;text-align:center}
-header{background:#00c800;padding:12px;font-weight:bold}
-#videoBox{width:94%;max-width:500px;height:500px;margin:10px auto;background:black;border:3px solid #00c800;border-radius:16px;overflow:hidden;position:relative}
-#videoBox iframe{width:100%;height:100%;border:none}
-.btn{padding:20px;width:94%;max-width:500px;margin:8px auto;background:#00c800;color:white;border:none;border-radius:14px;font-size:20px;font-weight:bold}
-input{width:94%;max-width:500px;padding:16px;border-radius:12px;border:none;font-size:18px;margin-top:8px}
-#texto{padding:10px;min-height:30px;font-size:18px}
+body{background:#000;color:white;text-align:center}
+header{background:#c8c8c8;color:#111;padding:14px;font-weight:bold}
+#videoBox{width:96%;max-width:520px;height:560px;margin:10px auto;background:#000;border:4px solid #fff;border-radius:18px;overflow:hidden;position:relative;box-shadow:0 0 20px rgba(255,255,255,0.3)}
+#videoBox iframe{width:100%;height:100%;border:none;filter: contrast(180%) brightness(130%) saturate(0); transform: scale(1.1);}
+.btn{padding:18px;width:96%;max-width:520px;margin:6px auto;background:#e0e0e0;color:#111;border:none;border-radius:12px;font-size:19px;font-weight:bold}
+input{width:96%;max-width:520px;padding:16px;border-radius:12px;border:2px solid #fff;font-size:18px;background:#111;color:white}
+#texto{padding:8px;font-size:17px;color:#fff;background:#222}
 </style>
 </head>
 <body>
-<header>UNIVERSAL SOCIAL DYNAMICS - Video LSA Real</header>
-<div id="videoBox"><iframe id="avatar" src="https://sign.mt/?text=Hola"></iframe></div>
-<p id="texto">Tocá el micrófono y decí algo...</p>
-<button id="grabar" class="btn">🎤 TOCAR PARA HABLAR Y GENERAR VIDEO LSA</button>
-<input id="escribir" placeholder="O escribí: hola gracias">
-<button id="btnT" class="btn" style="background:#2222ff">GENERAR VIDEO LSA REAL ▶️</button>
+<header>UNIVERSAL SOCIAL DYNAMICS - Modo Alta Visibilidad</header>
+<div id="videoBox"><iframe id="avatar" src="https://sign.mt/?text=Hola&lang=ase"></iframe></div>
+<p id="texto">Modo día activado - Contraste alto</p>
+<button id="grabar" class="btn">🎤 TOCAR PARA HABLAR</button>
+<input id="escribir" placeholder="Escribí: hola gracias">
+<button id="btnT" class="btn" style="background:#fff;color:#000">GENERAR VIDEO LSA REAL ▶️</button>
+<button id="btnContraste" class="btn" style="background:#333;color:#fff;border:1px solid #fff">☀️ ALTERNAR MODO DÍA / NOCHE</button>
 
 <script>
 const iframe=document.getElementById('avatar');
 const txt=document.getElementById('texto');
+let modoDia=true;
+document.getElementById('btnContraste').onclick=()=>{
+ modoDia=!modoDia;
+ if(modoDia){
+  iframe.style.filter="contrast(180%) brightness(130%) saturate(0)";
+  document.getElementById('videoBox').style.background="#000";
+  txt.innerText="Modo DÍA - Contraste alto para ver con sol";
+ } else {
+  iframe.style.filter="contrast(120%) brightness(100%)";
+  document.getElementById('videoBox').style.background="#fff";
+  txt.innerText="Modo NOCHE - Normal";
+ }
+};
+function generar(frase){
+ txt.innerText="Video LSA: "+frase;
+ iframe.src="https://sign.mt/?text="+encodeURIComponent(frase)+"&lang=ase";
+}
+let rec=null;let escuchando=false;
+try{rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)();rec.lang='es-AR';}catch(e){}
 const btn=document.getElementById('grabar');
-const input=document.getElementById('escribir');
-const btnT=document.getElementById('btnT');
-let rec=null; let escuchando=false;
-
-function generarVideoReal(frase){
- if(!frase) return;
- txt.innerText="Generando video LSA real para: "+frase;
- let textoParaURL=encodeURIComponent(frase);
- // sign.mt es el traductor mundial con avatar 3D real
- iframe.src="https://sign.mt/?text="+textoParaURL+"&lang=ase";
-}
-
-try{
- rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
- rec.lang='es-AR';
-}catch(e){}
-
 if(rec){
- rec.onstart=()=>{escuchando=true;btn.innerText="🔴 ESCUCHANDO... SOLTÁ";btn.style.background="red";};
- rec.onend=()=>{escuchando=false;btn.innerText="🎤 TOCAR PARA HABLAR Y GENERAR VIDEO LSA";btn.style.background="#00c800";};
- rec.onresult=(e)=>{let t=e.results[0][0].transcript; generarVideoReal(t);};
- rec.onerror=(e)=>{txt.innerText="Error mic: "+e.error+" - Si estás grabando pantalla, parala y usá el teclado abajo";};
- btn.onclick=()=>{if(!escuchando){try{rec.start()}catch{}}else{try{rec.stop()}catch{}}};
+ rec.onstart=()=>{btn.innerText="🔴 ESCUCHANDO...";};
+ rec.onend=()=>{btn.innerText="🎤 TOCAR PARA HABLAR";};
+ rec.onresult=(e)=>{generar(e.results[0][0].transcript);};
+ btn.onclick=()=>{try{rec.start()}catch{try{rec.stop()}catch{}}};
 }
-btnT.onclick=()=>{generarVideoReal(input.value);};
+document.getElementById('btnT').onclick=()=>{generar(document.getElementById('escribir').value);};
 </script>
 </body>
 </html>
