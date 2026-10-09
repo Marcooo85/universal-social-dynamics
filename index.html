@@ -3,74 +3,62 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Universal - Traductor LSA REAL</title>
+<title>Universal - Traductor LSA Video</title>
 <style>
 *{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}
-body{background:#0a0a12;color:white;text-align:center}
-header{background:linear-gradient(90deg,#00c800,#00ff88);color:black;padding:18px;font-weight:bold}
-.btn{padding:26px 10px;width:90%;max-width:400px;margin:20px auto;background:#00c800;color:white;border:none;border-radius:18px;font-size:22px;font-weight:bold;display:block}
-#videoLSA{width:90%;max-width:500px;height:380px;margin:15px auto;background:#000;border-radius:16px;border:3px solid #00c800;display:flex;align-items:center;justify-content:center;flex-direction:column;overflow:hidden}
-.sena-letra{font-size:90px;animation:pop 0.3s}
-@keyframes pop{0%{transform:scale(0.5)}100%{transform:scale(1)}}
-#texto{margin:10px;font-size:20px;min-height:30px}
-.palabra{padding:6px 10px;background:#22223a;border-radius:8px;margin:3px;display:inline-block}
+body{background:#070712;color:white;text-align:center}
+header{background:#00c800;padding:14px;font-weight:bold}
+#videoBox{width:92%;max-width:480px;height:400px;margin:12px auto;background:black;border:3px solid #00c800;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-direction:column}
+.btn{padding:20px;width:92%;max-width:480px;margin:8px auto;background:#00c800;color:white;border:none;border-radius:14px;font-size:20px;font-weight:bold}
+input{width:92%;max-width:480px;padding:16px;border-radius:12px;border:none;font-size:18px;margin-top:10px}
+.anim{font-size:110px;animation:pop.25s}
+@keyframes pop{0%{transform:scale(.4)}100%{transform:scale(1)}}
 </style>
 </head>
 <body>
-<header>🌐 UNIVERSAL SOCIAL DYNAMICS - Traductor LSA con Video</header>
+<header>UNIVERSAL SOCIAL DYNAMICS - Video LSA</header>
+<div id="videoBox"><span style="font-size:70px">👋</span><p>Acá verás el video en señas</p></div>
+<p id="texto">Esperando audio o texto...</p>
 <button id="grabar" class="btn">🎤 TOCAR PARA HABLAR</button>
-<div id="texto">Tocá y decí algo: "Hola"</div>
-<div id="videoLSA"><span style="font-size:60px">👋</span><p>Acá se verá la traducción en señas</p></div>
-<div id="lista"></div>
+<input id="escribir" placeholder="O escribí acá Ej: hola gracias y tocá TRADUCIR">
+<button id="btnTraducir" class="btn" style="background:#2222aa">TRADUCIR TEXTO A VIDEO LSA ▶️</button>
+<div id="historial"></div>
 <script>
-const btn=document.getElementById('grabar');
+const videoBox=document.getElementById('videoBox');
 const txt=document.getElementById('texto');
-const video=document.getElementById('videoLSA');
-const lista=document.getElementById('lista');
-let rec; let escuchando=false;
-
+const btn=document.getElementById('grabar');
+const input=document.getElementById('escribir');
+const btnT=document.getElementById('btnTraducir');
+let rec=null; let escuchando=false;
 try{
 rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
-rec.lang='es-AR';
-rec.interimResults=false;
-}catch(e){txt.innerText="Tu navegador no soporta micrófono, probá con Chrome"}
+rec.lang='es-AR'; rec.interimResults=false;
+}catch(e){txt.innerText="Tu Chrome no soporta voz, usá el teclado abajo";}
 
-function iniciar(){if(escuchando)return;rec.start()}
-function parar(){try{rec.stop()}catch(e){}}
+const LSA={"HOLA":"👋","CHAU":"👋","GRACIAS":"🙏","POR":"🤲","FAVOR":"🙏","SI":"👍","NO":"👎","AYUDA":"🆘","AGUA":"💧","CASA":"🏠","COMO":"🤔","ESTAS":"😊","YO":"👉","VOS":"👉","ME":"👉","CASE":"💍","CASÉ":"💍","MAMA":"👩","PAPA":"👨"};
 
-btn.addEventListener('touchstart',e=>{e.preventDefault();iniciar()});
-btn.addEventListener('touchend',e=>{e.preventDefault();parar()});
-btn.onclick=()=>{escuchando?parar():iniciar()};
-
-rec.onstart=()=>{escuchando=true;btn.innerText="🔴 ESCUCHANDO... SOLTÁ PARA TRADUCIR";btn.style.background="red";txt.innerText="Escuchando...";};
-rec.onend=()=>{escuchando=false;btn.innerText="🎤 TOCAR PARA HABLAR";btn.style.background="#00c800";};
-
-rec.onerror=(e)=>{txt.innerText="Error: "+e.error+" - Dale permiso al micrófono arriba en el candadito"};
-
-const diccionarioLSA={
-"HOLA":"👋","CHAU":"👋","GRACIAS":"🙏","POR":"🤲","FAVOR":"🙏",
-"SI":"👍","NO":"👎","COMO":"🤔","ESTAS":"😊","YO":"👉","TU":"👉",
-"AYUDA":"🆘","AGUA":"💧","CASA":"🏠","ESCUELA":"🏫","HOSPITAL":"🏥"
-};
-
-rec.onresult=async(e)=>{
- let frase=e.results[0][0].transcript;
- txt.innerHTML="Dijiste: <b>"+frase+"</b>";
- let palabras=frase.toUpperCase().split(" ");
- lista.innerHTML="";
- video.innerHTML="";
+function reproducirVideoLSA(frase){
+ let palabras=frase.toUpperCase().trim().split(/\s+/);
+ txt.innerText="Traduciendo: "+frase;
  let i=0;
- function mostrarSiguiente(){
-  if(i>=palabras.length){video.innerHTML+="<p style='color:#00ff88;margin-top:10px'>✅ Traducción completa</p>";return;}
-  let p=palabras[i];
-  let emoji=diccionarioLSA[p]|| "🤟";
-  video.innerHTML=`<div class=sena-letra>${emoji}</div><h2 style=color:#00ff88>${p}</h2><p style=opacity:0.7>${i+1}/${palabras.length}</p>`;
-  let span=document.createElement('span'); span.className='palabra'; span.innerText=p; lista.appendChild(span);
-  i++;
-  setTimeout(mostrarSiguiente,1200);
+ function sig(){
+  if(i>=palabras.length){videoBox.innerHTML+="<b style='color:#00ff88'>✅ VIDEO LSA TERMINADO</b>";return;}
+  let p=palabras[i]; let emoji=LSA[p]||"🤟";
+  videoBox.innerHTML=`<div class=anim>${emoji}</div><h1 style=color:#00ff88>${p}</h1><p>${i+1} / ${palabras.length}</p>`;
+  i++; setTimeout(sig,1300);
  }
- mostrarSiguiente();
-};
+ sig();
+}
+
+if(rec){
+ rec.onstart=()=>{escuchando=true;btn.innerText="🔴 ESCUCHANDO... SOLTÁ";btn.style.background="red";};
+ rec.onend=()=>{escuchando=false;btn.innerText="🎤 TOCAR PARA HABLAR";btn.style.background="#00c800";};
+ rec.onresult=(e)=>{let t=e.results[0][0].transcript; reproducirVideoLSA(t);};
+ rec.onerror=(e)=>{txt.innerText="Error de mic: "+e.error+". Si estás grabando pantalla, parala. O usá el teclado abajo.";};
+ btn.onclick=()=>{if(!escuchando){try{rec.start()}catch(e){}}else{try{rec.stop()}catch(e){}}};
+}
+
+btnT.onclick=()=>{if(input.value.trim()!=""){reproducirVideoLSA(input.value);}};
 </script>
 </body>
 </html>
