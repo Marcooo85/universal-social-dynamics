@@ -3,51 +3,53 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Universal - Video LSA</title>
+<title>Universal Social Dynamics</title>
 <style>
 *{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}
-body{background:#000;color:white;text-align:center}
-header{background:#c8c8c8;color:#111;padding:12px;font-weight:bold}
+body{background:#000;color:#fff;text-align:center}
+header{background:#ddd;color:#111;padding:12px;font-weight:bold}
 #videoBox{width:96%;max-width:520px;height:520px;margin:10px auto;background:#000;border:4px solid #fff;border-radius:18px;overflow:hidden}
 #videoBox iframe{width:100%;height:100%;border:none;filter:contrast(180%) brightness(130%);transform:scale(1.1)}
-.btn{padding:14px;width:96%;max-width:520px;margin:6px auto;border:none;border-radius:12px;font-size:17px;font-weight:bold;display:block;cursor:pointer;text-decoration:none}
-.btn-accion{background:#e0e0e0;color:#111}
+.btn{padding:15px;width:96%;max-width:520px;margin:7px auto;border:none;border-radius:12px;font-size:17px;font-weight:bold;display:block;cursor:pointer;text-decoration:none}
+.btn1{background:#e0e0e0;color:#111}
+.btnPesos{background:#FF6D00;color:white}
+.btnDolar{background:#000;color:white;border:2px solid #00D26A}
+.btnShare{background:#25D366;color:white}
 </style>
 </head>
 <body>
 <header>UNIVERSAL SOCIAL DYNAMICS</header>
 <div id="videoBox"><iframe id="avatar" src="https://sign.mt/?text=Hola&lang=ase"></iframe></div>
-<p id="texto">Listo</p>
-<button id="grabar" class="btn btn-accion">🎤 HABLAR</button>
-<input id="escribir" style="width:96%;max-width:520px;padding:12px;border-radius:12px;background:#111;color:white;border:2px solid white" placeholder="Escribí: hola gracias">
-<button id="btnT" class="btn btn-accion">GENERAR VIDEO LSA ▶️</button>
+<p id="texto" style="margin:8px;color:#FF6D00;font-weight:bold">Listo</p>
+<button id="grabar" class="btn btn1">🎤 HABLAR</button>
+<input id="escribir" style="width:96%;max-width:520px;padding:13px;border-radius:12px;background:#111;color:white;border:2px solid #555" placeholder="Escribi: hola gracias">
+<button id="btnT" class="btn btn1">GENERAR VIDEO LSA</button>
 
-<div style="width:96%;max-width:520px;margin:12px auto;background:#111;border:1px solid #333;padding:12px;border-radius:14px;text-align:left">
-<p style="text-align:center;font-weight:bold;margin-bottom:10px">🙏 APOYÁ ESTE PROYECTO INCLUSIVO</p>
+<div style="width:96%;max-width:520px;margin:12px auto;background:#111;border:1px solid #333;padding:12px;border-radius:14px">
+<p style="font-weight:bold;margin-bottom:8px">APOYÁ ESTE PROYECTO INCLUSIVO</p>
 
-<a href="https://naranjax.com/t/MHERRERA4872.NX.ARS" target="_blank" class="btn" style="background:#FF6D00;color:white;text-align:center;line-height:1.2">
-🇦🇷 DONAR EN PESOS (ARS)<br>
-<span style="font-size:13px;font-weight:normal">Alias: MHERRERA4872.NX.ARS</span><br>
-<span style="font-size:11px;background:white;color:#FF6D00;padding:2px 6px;border-radius:6px">$500 - $1000 - $2000 - Lo que puedas</span>
-</a>
+<a href="https://naranjax.com/t/MHERRERA4872.NX.ARS" target="_blank" class="btn btnPesos">🇦🇷 EN PESOS - MHERRERA4872.NX.ARS<br><span style="font-size:12px">$500 $1000 $2000</span></a>
 
-<a href="https://naranjax.com/t/MHERRERA8437.NX.USD" target="_blank" class="btn" style="background:#111;color:white;border:2px solid #00D26A;text-align:center;line-height:1.2">
-🇺🇸 DONATE IN DOLLARS (USD)<br>
-<span style="font-size:13px;font-weight:normal">Alias: MHERRERA8437.NX.USD</span><br>
-<span style="font-size:11px;background:#00D26A;color:white;padding:2px 6px;border-radius:6px">U$D 2 - U$D 5 - U$D 10</span>
-</a>
+<a href="https://naranjax.com/t/MHERRERA8437.NX.USD" target="_blank" class="btn btnDolar">🇺🇸 EN DOLARES - MHERRERA8437.NX.USD<br><span style="font-size:12px">USD 2 5 10</span></a>
 
-<p style="font-size:12px;color:#aaa;text-align:center;margin-top:8px">Cada donación ayuda a generar más proyectos inclusivos. ¡Gracias!</p>
-<p style="font-size:11px;color:#666;text-align:center">Visitas: <span id="visitas">...</span></p>
+<button id="btnCompartir" class="btn btnShare">📤 COMPARTIR CON MIS APPS</button>
+<p style="font-size:11px;color:#666;margin-top:6px">Visitas: <span id="v">0</span></p>
 </div>
 
 <script>
-fetch('https://api.countapi.xyz/hit/marcooo85-final-v10/visitas').then(r=>r.json()).then(d=>document.getElementById('visitas').innerText=d.value).catch(()=>document.getElementById('visitas').innerText="100+");
-let ultima="Hola";const iframe=document.getElementById('avatar');const txt=document.getElementById('texto');
-function generar(f){if(!f)return;ultima=f;txt.innerText="LSA: "+f;iframe.src="https://sign.mt/?text="+encodeURIComponent(f)+"&lang=ase";}
+let ultima="Hola";
+let iframe=document.getElementById('avatar');
+let txt=document.getElementById('texto');
+function generar(f){if(!f)return;ultima=f;txt.innerText=f;iframe.src="https://sign.mt/?text="+encodeURIComponent(f)+"&lang=ase";}
+fetch('https://api.countapi.xyz/hit/marcooo85-final-123/visitas').then(r=>r.json()).then(d=>document.getElementById('v').innerText=d.value).catch(()=>document.getElementById('v').innerText="50");
 let rec=null;try{rec=new(window.SpeechRecognition||window.webkitSpeechRecognition)();rec.lang='es-AR'}catch{}
 if(rec){rec.onresult=e=>generar(e.results[0][0].transcript);document.getElementById('grabar').onclick=()=>{try{rec.start()}catch{}};}
 document.getElementById('btnT').onclick=()=>generar(document.getElementById('escribir').value);
+document.getElementById('btnCompartir').onclick=async()=>{
+let url="https://marcooo85.github.io/universal-social-dynamics/";
+let text="Mira este traductor LSA: "+ultima+" - Probalo: "+url;
+if(navigator.share){try{await navigator.share({title:"Traductor LSA",text:text,url:url})}catch{}}else{window.open("https://wa.me/?text="+encodeURIComponent(text),"_blank")}
+};
 </script>
 </body>
 </html>
