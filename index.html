@@ -3,55 +3,76 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Universal - Video LSA Alta Visibilidad</title>
+<title>Universal - Video LSA</title>
 <style>
 *{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}
 body{background:#000;color:white;text-align:center}
-header{background:#c8c8c8;color:#111;padding:14px;font-weight:bold}
-#videoBox{width:96%;max-width:520px;height:560px;margin:10px auto;background:#000;border:4px solid #fff;border-radius:18px;overflow:hidden;position:relative;box-shadow:0 0 20px rgba(255,255,255,0.3)}
-#videoBox iframe{width:100%;height:100%;border:none;filter: contrast(180%) brightness(130%) saturate(0); transform: scale(1.1);}
-.btn{padding:18px;width:96%;max-width:520px;margin:6px auto;background:#e0e0e0;color:#111;border:none;border-radius:12px;font-size:19px;font-weight:bold}
-input{width:96%;max-width:520px;padding:16px;border-radius:12px;border:2px solid #fff;font-size:18px;background:#111;color:white}
-#texto{padding:8px;font-size:17px;color:#fff;background:#222}
+header{background:#c8c8c8;color:#111;padding:12px;font-weight:bold}
+#videoBox{width:96%;max-width:520px;height:560px;margin:10px auto;background:#000;border:4px solid #fff;border-radius:18px;overflow:hidden}
+#videoBox iframe{width:100%;height:100%;border:none;filter:contrast(180%) brightness(130%);transform:scale(1.1)}
+.btn{padding:16px;width:96%;max-width:520px;margin:5px auto;background:#e0e0e0;color:#111;border:none;border-radius:12px;font-size:18px;font-weight:bold;display:block}
+input{width:96%;max-width:520px;padding:14px;border-radius:12px;border:2px solid #fff;background:#111;color:white}
+#texto{padding:8px;background:#222}
+.row{display:flex;gap:6px;justify-content:center;width:96%;max-width:520px;margin:6px auto}
+.row.btn{flex:1}
 </style>
 </head>
 <body>
-<header>UNIVERSAL SOCIAL DYNAMICS - Modo Alta Visibilidad</header>
+<header>UNIVERSAL SOCIAL DYNAMICS</header>
 <div id="videoBox"><iframe id="avatar" src="https://sign.mt/?text=Hola&lang=ase"></iframe></div>
-<p id="texto">Modo día activado - Contraste alto</p>
+<p id="texto">Listo para generar</p>
 <button id="grabar" class="btn">🎤 TOCAR PARA HABLAR</button>
 <input id="escribir" placeholder="Escribí: hola gracias">
-<button id="btnT" class="btn" style="background:#fff;color:#000">GENERAR VIDEO LSA REAL ▶️</button>
-<button id="btnContraste" class="btn" style="background:#333;color:#fff;border:1px solid #fff">☀️ ALTERNAR MODO DÍA / NOCHE</button>
+<button id="btnT" class="btn" style="background:#fff">GENERAR VIDEO LSA ▶️</button>
+
+<div class="row">
+<button id="btnCompartir" class="btn" style="background:#25D366;color:white">📤 COMPARTIR</button>
+<button id="btnDescargar" class="btn" style="background:#444;color:white">⬇️ DESCARGAR</button>
+</div>
 
 <script>
+let ultimaFrase="Hola";
 const iframe=document.getElementById('avatar');
 const txt=document.getElementById('texto');
-let modoDia=true;
-document.getElementById('btnContraste').onclick=()=>{
- modoDia=!modoDia;
- if(modoDia){
-  iframe.style.filter="contrast(180%) brightness(130%) saturate(0)";
-  document.getElementById('videoBox').style.background="#000";
-  txt.innerText="Modo DÍA - Contraste alto para ver con sol";
- } else {
-  iframe.style.filter="contrast(120%) brightness(100%)";
-  document.getElementById('videoBox').style.background="#fff";
-  txt.innerText="Modo NOCHE - Normal";
- }
-};
+
 function generar(frase){
+ if(!frase) return;
+ ultimaFrase=frase;
  txt.innerText="Video LSA: "+frase;
  iframe.src="https://sign.mt/?text="+encodeURIComponent(frase)+"&lang=ase";
 }
-let rec=null;let escuchando=false;
+
+// Compartir - AHORA SI FUNCIONA
+document.getElementById('btnCompartir').onclick=async()=>{
+ let url=window.location.href;
+ let textoShare="Mirá este video en LSA: "+ultimaFrase+" - "+url+"?frase="+encodeURIComponent(ultimaFrase);
+ if(navigator.share){
+   try{await navigator.share({title:"Universal LSA",text:textoShare,url:url}); txt.innerText="¡Compartido!";}catch{}
+ } else {
+   try{await navigator.clipboard.writeText(textoShare); txt.innerText="¡Link copiado al portapapeles!"; alert("Link copiado: "+textoShare);}catch{alert(textoShare);}
+ }
+};
+
+// Descargar - AHORA SI FUNCIONA (descarga un archivo.txt con la frase + link del video)
+document.getElementById('btnDescargar').onclick=()=>{
+ let contenido="UNIVERSAL SOCIAL DYNAMICS - Video LSA\nFrase: "+ultimaFrase+"\nVideo LSA: https://sign.mt/?text="+encodeURIComponent(ultimaFrase)+"&lang=ase\nFecha: "+new Date().toLocaleString();
+ let blob=new Blob([contenido],{type:"text/plain"});
+ let a=document.createElement("a");
+ a.href=URL.createObjectURL(blob);
+ a.download="Video-LSA-"+ultimaFrase.substring(0,20)+".txt";
+ a.click();
+ txt.innerText="¡Archivo descargado! Nota: el video real se guarda grabando la pantalla con el botón de tu celular";
+ alert("Te descargué un archivo con el link del video LSA.\n\nPara descargar el VIDEO real en mp4: Mientras el avatar se mueve, mantené apretado el video o usá la opción 'Grabar pantalla' de tu celular y después recortalo. Es la única forma porque sign.mt no deja descargar directo.");
+};
+
+// Voz y botones
+let rec=null;
 try{rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)();rec.lang='es-AR';}catch(e){}
 const btn=document.getElementById('grabar');
 if(rec){
- rec.onstart=()=>{btn.innerText="🔴 ESCUCHANDO...";};
- rec.onend=()=>{btn.innerText="🎤 TOCAR PARA HABLAR";};
  rec.onresult=(e)=>{generar(e.results[0][0].transcript);};
- btn.onclick=()=>{try{rec.start()}catch{try{rec.stop()}catch{}}};
+ btn.onclick=()=>{try{rec.start();btn.innerText="🔴 ESCUCHANDO..."}catch{try{rec.stop()}catch{}}};
+ rec.onend=()=>{btn.innerText="🎤 TOCAR PARA HABLAR";};
 }
 document.getElementById('btnT').onclick=()=>{generar(document.getElementById('escribir').value);};
 </script>
