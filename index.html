@@ -3,62 +3,55 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Universal - Traductor LSA Video</title>
+<title>Universal - Video LSA REAL</title>
 <style>
 *{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}
 body{background:#070712;color:white;text-align:center}
-header{background:#00c800;padding:14px;font-weight:bold}
-#videoBox{width:92%;max-width:480px;height:400px;margin:12px auto;background:black;border:3px solid #00c800;border-radius:16px;display:flex;align-items:center;justify-content:center;flex-direction:column}
-.btn{padding:20px;width:92%;max-width:480px;margin:8px auto;background:#00c800;color:white;border:none;border-radius:14px;font-size:20px;font-weight:bold}
-input{width:92%;max-width:480px;padding:16px;border-radius:12px;border:none;font-size:18px;margin-top:10px}
-.anim{font-size:110px;animation:pop.25s}
-@keyframes pop{0%{transform:scale(.4)}100%{transform:scale(1)}}
+header{background:#00c800;padding:12px;font-weight:bold}
+#videoBox{width:94%;max-width:500px;height:500px;margin:10px auto;background:black;border:3px solid #00c800;border-radius:16px;overflow:hidden;position:relative}
+#videoBox iframe{width:100%;height:100%;border:none}
+.btn{padding:20px;width:94%;max-width:500px;margin:8px auto;background:#00c800;color:white;border:none;border-radius:14px;font-size:20px;font-weight:bold}
+input{width:94%;max-width:500px;padding:16px;border-radius:12px;border:none;font-size:18px;margin-top:8px}
+#texto{padding:10px;min-height:30px;font-size:18px}
 </style>
 </head>
 <body>
-<header>UNIVERSAL SOCIAL DYNAMICS - Video LSA</header>
-<div id="videoBox"><span style="font-size:70px">👋</span><p>Acá verás el video en señas</p></div>
-<p id="texto">Esperando audio o texto...</p>
-<button id="grabar" class="btn">🎤 TOCAR PARA HABLAR</button>
-<input id="escribir" placeholder="O escribí acá Ej: hola gracias y tocá TRADUCIR">
-<button id="btnTraducir" class="btn" style="background:#2222aa">TRADUCIR TEXTO A VIDEO LSA ▶️</button>
-<div id="historial"></div>
+<header>UNIVERSAL SOCIAL DYNAMICS - Video LSA Real</header>
+<div id="videoBox"><iframe id="avatar" src="https://sign.mt/?text=Hola"></iframe></div>
+<p id="texto">Tocá el micrófono y decí algo...</p>
+<button id="grabar" class="btn">🎤 TOCAR PARA HABLAR Y GENERAR VIDEO LSA</button>
+<input id="escribir" placeholder="O escribí: hola gracias">
+<button id="btnT" class="btn" style="background:#2222ff">GENERAR VIDEO LSA REAL ▶️</button>
+
 <script>
-const videoBox=document.getElementById('videoBox');
+const iframe=document.getElementById('avatar');
 const txt=document.getElementById('texto');
 const btn=document.getElementById('grabar');
 const input=document.getElementById('escribir');
-const btnT=document.getElementById('btnTraducir');
+const btnT=document.getElementById('btnT');
 let rec=null; let escuchando=false;
-try{
-rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
-rec.lang='es-AR'; rec.interimResults=false;
-}catch(e){txt.innerText="Tu Chrome no soporta voz, usá el teclado abajo";}
 
-const LSA={"HOLA":"👋","CHAU":"👋","GRACIAS":"🙏","POR":"🤲","FAVOR":"🙏","SI":"👍","NO":"👎","AYUDA":"🆘","AGUA":"💧","CASA":"🏠","COMO":"🤔","ESTAS":"😊","YO":"👉","VOS":"👉","ME":"👉","CASE":"💍","CASÉ":"💍","MAMA":"👩","PAPA":"👨"};
-
-function reproducirVideoLSA(frase){
- let palabras=frase.toUpperCase().trim().split(/\s+/);
- txt.innerText="Traduciendo: "+frase;
- let i=0;
- function sig(){
-  if(i>=palabras.length){videoBox.innerHTML+="<b style='color:#00ff88'>✅ VIDEO LSA TERMINADO</b>";return;}
-  let p=palabras[i]; let emoji=LSA[p]||"🤟";
-  videoBox.innerHTML=`<div class=anim>${emoji}</div><h1 style=color:#00ff88>${p}</h1><p>${i+1} / ${palabras.length}</p>`;
-  i++; setTimeout(sig,1300);
- }
- sig();
+function generarVideoReal(frase){
+ if(!frase) return;
+ txt.innerText="Generando video LSA real para: "+frase;
+ let textoParaURL=encodeURIComponent(frase);
+ // sign.mt es el traductor mundial con avatar 3D real
+ iframe.src="https://sign.mt/?text="+textoParaURL+"&lang=ase";
 }
+
+try{
+ rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
+ rec.lang='es-AR';
+}catch(e){}
 
 if(rec){
  rec.onstart=()=>{escuchando=true;btn.innerText="🔴 ESCUCHANDO... SOLTÁ";btn.style.background="red";};
- rec.onend=()=>{escuchando=false;btn.innerText="🎤 TOCAR PARA HABLAR";btn.style.background="#00c800";};
- rec.onresult=(e)=>{let t=e.results[0][0].transcript; reproducirVideoLSA(t);};
- rec.onerror=(e)=>{txt.innerText="Error de mic: "+e.error+". Si estás grabando pantalla, parala. O usá el teclado abajo.";};
- btn.onclick=()=>{if(!escuchando){try{rec.start()}catch(e){}}else{try{rec.stop()}catch(e){}}};
+ rec.onend=()=>{escuchando=false;btn.innerText="🎤 TOCAR PARA HABLAR Y GENERAR VIDEO LSA";btn.style.background="#00c800";};
+ rec.onresult=(e)=>{let t=e.results[0][0].transcript; generarVideoReal(t);};
+ rec.onerror=(e)=>{txt.innerText="Error mic: "+e.error+" - Si estás grabando pantalla, parala y usá el teclado abajo";};
+ btn.onclick=()=>{if(!escuchando){try{rec.start()}catch{}}else{try{rec.stop()}catch{}}};
 }
-
-btnT.onclick=()=>{if(input.value.trim()!=""){reproducirVideoLSA(input.value);}};
+btnT.onclick=()=>{generarVideoReal(input.value);};
 </script>
 </body>
 </html>
