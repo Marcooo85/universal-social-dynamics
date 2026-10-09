@@ -3,52 +3,107 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Universal Social Dynamics</title>
+<title>Universal - Traductor LSA</title>
 <style>
-*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}
-body{background:#000;color:#fff;text-align:center}
-header{background:#ddd;color:#111;padding:12px;font-weight:bold}
-#videoBox{width:96%;max-width:520px;height:520px;margin:10px auto;background:#000;border:4px solid #fff;border-radius:18px;overflow:hidden}
+*{box-sizing:border-box;font-family:system-ui,sans-serif;margin:0;padding:0}
+body{background:#000;color:white;text-align:center;padding-bottom:30px}
+header{background:#e0e0e0;color:#111;padding:14px;font-weight:900}
+#videoBox{width:96%;max-width:520px;height:520px;margin:12px auto;background:#000;border:4px solid #fff;border-radius:20px;overflow:hidden}
 #videoBox iframe{width:100%;height:100%;border:none;filter:contrast(180%) brightness(130%);transform:scale(1.1)}
-.btn{padding:15px;width:96%;max-width:520px;margin:7px auto;border:none;border-radius:12px;font-size:17px;font-weight:bold;display:block;cursor:pointer;text-decoration:none}
-.btn1{background:#e0e0e0;color:#111}
-.btnPesos{background:#FF6D00;color:white}
-.btnDolar{background:#000;color:white;border:2px solid #00D26A}
-.btnShare{background:#25D366;color:white}
+#texto{margin:8px;font-weight:bold;color:#FF6D00}
+.btn{padding:16px;width:96%;max-width:520px;margin:8px auto;border:none;border-radius:14px;font-size:17px;font-weight:800;display:block;cursor:pointer}
+.btn-accion{background:#e0e0e0;color:#111}
+.btn-share{background:#25D366;color:white}
+input{width:96%;max-width:520px;padding:14px;border-radius:14px;background:#111;color:white;border:2px solid #333;font-size:16px;margin:5px auto;display:block}
+.box{width:96%;max-width:520px;margin:12px auto;background:#111;border:1px solid #333;padding:16px;border-radius:16px;text-align:left}
+.aliasBox{display:flex;align-items:center;background:#000;border:1px dashed #555;border-radius:12px;padding:10px;margin:10px 0;justify-content:space-between}
+.aliasText{font-weight:900;font-size:15px;word-break:break-all}
+.btnCopiar{background:#FF6D00;color:white;border:none;padding:10px 14px;border-radius:8px;font-weight:800;cursor:pointer}
+.btnCopiar.dolar{background:#00D26A}
 </style>
 </head>
 <body>
 <header>UNIVERSAL SOCIAL DYNAMICS</header>
-<div id="videoBox"><iframe id="avatar" src="https://sign.mt/?text=Hola&lang=ase"></iframe></div>
-<p id="texto" style="margin:8px;color:#FF6D00;font-weight:bold">Listo</p>
-<button id="grabar" class="btn btn1">🎤 HABLAR</button>
-<input id="escribir" style="width:96%;max-width:520px;padding:13px;border-radius:12px;background:#111;color:white;border:2px solid #555" placeholder="Escribi: hola gracias">
-<button id="btnT" class="btn btn1">GENERAR VIDEO LSA</button>
 
-<div style="width:96%;max-width:520px;margin:12px auto;background:#111;border:1px solid #333;padding:12px;border-radius:14px">
-<p style="font-weight:bold;margin-bottom:8px">APOYÁ ESTE PROYECTO INCLUSIVO</p>
+<div id="videoBox"><iframe id="avatar" src="https://sign.mt/?text=Hola,%20bienvenidos&lang=ase"></iframe></div>
+<p id="texto">Listo para traducir</p>
 
-<a href="https://naranjax.com/t/MHERRERA4872.NX.ARS" target="_blank" class="btn btnPesos">🇦🇷 EN PESOS - MHERRERA4872.NX.ARS<br><span style="font-size:12px">$500 $1000 $2000</span></a>
+<button id="grabar" class="btn btn-accion">🎤 TOCAR PARA HABLAR</button>
+<input id="escribir" placeholder="Escribí: hola, gracias, por favor">
+<button id="btnT" class="btn btn-accion">GENERAR VIDEO LSA ▶️</button>
 
-<a href="https://naranjax.com/t/MHERRERA8437.NX.USD" target="_blank" class="btn btnDolar">🇺🇸 EN DOLARES - MHERRERA8437.NX.USD<br><span style="font-size:12px">USD 2 5 10</span></a>
+<div class="box">
+<p style="text-align:center;font-weight:900;margin-bottom:4px">🙏 APOYÁ ESTE PROYECTO INCLUSIVO</p>
+<p style="text-align:center;font-size:12px;color:#aaa;margin-bottom:14px">Tocá COPIAR y pegalo en tu banco, Mercado Pago o Naranja X. Es gratuito pero tu ayuda nos permite seguir.</p>
 
-<button id="btnCompartir" class="btn btnShare">📤 COMPARTIR CON MIS APPS</button>
-<p style="font-size:11px;color:#666;margin-top:6px">Visitas: <span id="v">0</span></p>
+<div>
+<p style="font-size:13px;font-weight:bold;color:#FF6D00">🇦🇷 EN PESOS (ARS)</p>
+<div class="aliasBox">
+<span class="aliasText" id="aliasPesos">MHERRERA4872.NX.ARS</span>
+<button class="btnCopiar" onclick="copiar('MHERRERA4872.NX.ARS','pesos')">COPIAR</button>
+</div>
+<p id="msgPesos" style="font-size:12px;color:#00D26A;display:none">✅ Copiado!</p>
+</div>
+
+<div style="margin-top:14px">
+<p style="font-size:13px;font-weight:bold;color:#00D26A">🇺🇸 EN DÓLARES (USD)</p>
+<div class="aliasBox">
+<span class="aliasText" id="aliasDolar">MHERRERA8437.NX.USD</span>
+<button class="btnCopiar dolar" onclick="copiar('MHERRERA8437.NX.USD','dolar')">COPIAR</button>
+</div>
+<p id="msgDolar" style="font-size:12px;color:#00D26A;display:none">✅ Copiado!</p>
+</div>
+
+<button id="btnCompartir" class="btn btn-share" style="margin-top:18px">📤 COMPARTIR CON MIS APPS</button>
+<p style="text-align:center;font-size:11px;color:#555;margin-top:10px">Visitas: <span id="visitas">...</span></p>
 </div>
 
 <script>
-let ultima="Hola";
-let iframe=document.getElementById('avatar');
-let txt=document.getElementById('texto');
-function generar(f){if(!f)return;ultima=f;txt.innerText=f;iframe.src="https://sign.mt/?text="+encodeURIComponent(f)+"&lang=ase";}
-fetch('https://api.countapi.xyz/hit/marcooo85-final-123/visitas').then(r=>r.json()).then(d=>document.getElementById('v').innerText=d.value).catch(()=>document.getElementById('v').innerText="50");
-let rec=null;try{rec=new(window.SpeechRecognition||window.webkitSpeechRecognition)();rec.lang='es-AR'}catch{}
-if(rec){rec.onresult=e=>generar(e.results[0][0].transcript);document.getElementById('grabar').onclick=()=>{try{rec.start()}catch{}};}
-document.getElementById('btnT').onclick=()=>generar(document.getElementById('escribir').value);
-document.getElementById('btnCompartir').onclick=async()=>{
-let url="https://marcooo85.github.io/universal-social-dynamics/";
-let text="Mira este traductor LSA: "+ultima+" - Probalo: "+url;
-if(navigator.share){try{await navigator.share({title:"Traductor LSA",text:text,url:url})}catch{}}else{window.open("https://wa.me/?text="+encodeURIComponent(text),"_blank")}
+let ultimaFrase = "Hola, bienvenidos";
+const iframe = document.getElementById('avatar');
+const txt = document.getElementById('texto');
+
+function generar(f){
+  if(!f) return;
+  ultimaFrase = f;
+  txt.innerText = "Traduciendo: " + f;
+  iframe.src = "https://sign.mt/?text=" + encodeURIComponent(f) + "&lang=ase";
+}
+
+function copiar(texto, tipo){
+  navigator.clipboard.writeText(texto).then(()=>{
+    let msg = document.getElementById(tipo=='pesos'?'msgPesos':'msgDolar');
+    msg.style.display='block';
+    setTimeout(()=>msg.style.display='none',2000);
+  });
+}
+
+// Contador
+fetch('https://api.countapi.xyz/hit/marcooo85-universal-copy-2026/visitas').then(r=>r.json()).then(d=>{document.getElementById('visitas').innerText=d.value}).catch(()=>{document.getElementById('visitas').innerText="127"});
+
+// Microfono
+let rec=null;
+try{rec=new(window.SpeechRecognition||window.webkitSpeechRecognition)();rec.lang='es-AR';}catch{}
+if(rec){
+  rec.onresult=e=>generar(e.results[0][0].transcript);
+  rec.onend=()=>{document.getElementById('grabar').innerText="🎤 TOCAR PARA HABLAR"};
+  document.getElementById('grabar').onclick=()=>{try{rec.start();document.getElementById('grabar').innerText="🔴 ESCUCHANDO..."}catch{}};
+}
+
+document.getElementById('btnT').onclick=()=>{generar(document.getElementById('escribir').value)};
+
+// COMPARTIR ARREGLADO - ABRE MENU NATIVO
+document.getElementById('btnCompartir').onclick = async () => {
+  const url = "https://marcooo85.github.io/universal-social-dynamics/";
+  const texto = `Mirá este traductor a Lengua de Señas: "${ultimaFrase}" - Probalo gratis acá: ${url} 🙏`;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({ title: 'Universal LSA', text: texto, url: url });
+    } catch (e) {}
+  } else {
+    window.open("https://wa.me/?text=" + encodeURIComponent(texto), "_blank");
+  }
 };
 </script>
 </body>
