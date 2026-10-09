@@ -2,90 +2,157 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>UNIVERSAL SOCIAL DYNAMICS</title>
+<title>UNIVERSAL SOCIAL DYNAMICS - LSA Real</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,-apple-system,sans-serif}
+*{box-sizing:border-box;margin:0;padding:0;font-family:system-ui,sans-serif}
 body{background:#EEF2F7}
-.app{max-width:430px;margin:0 auto;background:#fff;min-height:100vh;box-shadow:0 0 40px rgba(0,0,0,.1)}
-.header{background:#1E3A5F;color:#fff;padding:28px 20px 22px;text-align:center}
-.header h1{font-size:22px;font-weight:800;line-height:1.1;letter-spacing:.5px}
-.content{padding:18px 16px 30px}
-.label{font-weight:700;color:#2C3E66;font-size:15px;margin-bottom:12px}
-.videoBox{width:100%;height:230px;background:#000;border-radius:14px;overflow:hidden;position:relative;box-shadow:0 8px 25px rgba(0,0,0,.15)}
-.videoBox canvas{width:100%;height:100%;display:block}
-.badge{position:absolute;top:10px;left:10px;background:#2C4A7A;color:#fff;font-size:10px;font-weight:700;padding:5px 10px;border-radius:20px}
-.timer{position:absolute;bottom:10px;left:10px;right:10px;display:flex;justify-content:space-between;color:#fff;font-size:12px;font-weight:600}
-.timer span:last-child{border:1px solid rgba(255,255,255,.6);padding:2px 6px;border-radius:4px}
-.btnShare{width:100%;background:#1E3A5F;color:#fff;border:none;border-radius:12px;padding:16px;font-weight:800;font-size:15px;margin:16px 0;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px}
-.inputBox{width:100%;background:#fff;border:1.5px solid #D6DDE8;border-radius:12px;padding:12px 14px;display:flex;align-items:center}
-.inputBox input{flex:1;border:none;outline:none;font-size:14px;color:#334155}
-.inputBox button{border:none;background:none;color:#1E3A5F;font-size:20px;font-weight:800;cursor:pointer}
-.apoya{margin-top:22px}
-.apoya h3{font-size:16px;color:#2C3E66;display:flex;align-items:center;gap:6px}
-.donaBox{background:#E8EEF8;border-radius:12px;padding:16px;margin-top:12px}
-.donaBox small{color:#5A6D8A;font-weight:600;font-size:12px}
-.aliasRow{display:flex;justify-content:space-between;align-items:center;background:#fff;border:1.5px solid #C5D3E8;border-radius:10px;padding:10px 12px;margin-top:8px}
-.aliasRow b{font-size:14px;color:#1E3A5F}
-.copyBtn{border:none;background:none;font-size:18px;cursor:pointer}
-.footerNav{display:flex;justify-content:space-around;padding:16px 0;border-top:1px solid #EEF2F7;margin-top:30px;color:#8A9BB0}
+.app{max-width:430px;margin:0 auto;background:#fff;min-height:100vh}
+.header{background:#1E3A5F;color:#fff;padding:24px;text-align:center;font-weight:800;font-size:20px;letter-spacing:.5px}
+.content{padding:16px}
+.videoBox{width:100%;height:280px;background:#fff;border-radius:14px;overflow:hidden;position:relative;border:4px solid #fff;box-shadow:0 8px 25px rgba(0,0,0,.1)}
+canvas{width:100%;height:100%;display:block}
+.badge{position:absolute;top:10px;left:10px;background:#1E3A5F;color:#fff;font-size:10px;font-weight:700;padding:5px 10px;border-radius:20px}
+.palabraActual{position:absolute;bottom:10px;left:0;right:0;text-align:center;background:rgba(30,58,95,.85);color:#fff;padding:6px;font-weight:800;font-size:14px;letter-spacing:1px}
+.btnShare{width:100%;background:#1E3A5F;color:#fff;border:none;border-radius:12px;padding:16px;font-weight:800;margin:16px 0;cursor:pointer}
+.inputBox{width:100%;border:1.5px solid #C5D3E8;border-radius:12px;padding:12px 14px;display:flex;align-items:center;background:#fff}
+.inputBox input{flex:1;border:none;outline:none;font-size:14px}
+.inputBox button{border:none;background:#1E3A5F;color:#fff;width:36px;height:36px;border-radius:8px;font-size:18px;font-weight:800;cursor:pointer}
+.traduccion{margin:10px 0;background:#E8EEF8;border-radius:10px;padding:12px;font-size:13px;color:#2C3E66;min-height:45px}
+.traduccion b{color:#1E3A5F}
 </style>
 </head>
 <body>
 <div class="app">
-<div class="header"><h1>UNIVERSAL<br>SOCIAL DYNAMICS</h1></div>
+<div class="header">UNIVERSAL<br>SOCIAL DYNAMICS</div>
 <div class="content">
-<div class="label">Traductor LSA en vivo</div>
-<div class="videoBox"><canvas id="c" width="640" height="360"></canvas><div class="badge">EN VIVO • 1080p</div><div class="timer"><span>▶ 00:12 / 01:45</span><span>⛶</span></div></div>
-<button class="btnShare" id="btnMain" onclick="compartirVideo()">⎙ COMPARTIR VIDEO LSA</button>
-<div class="inputBox"><input id="txt" placeholder="Escribe tu mensaje para traducir a LSA..."><button onclick="enviar()">➤</button></div>
-<div id="frase" style="margin:12px 4px;color:#1E3A5F;font-weight:600"></div>
-<div class="apoya"><h3>Apoya el proyecto <span style="font-size:14px;color:#8A9BB0">ⓘ</span></h3><div class="donaBox"><small>Alias para donaciones:</small><div class="aliasRow"><b id="alias">universal.lsa.apoyo</b><button class="copyBtn" onclick="navigator.clipboard.writeText('universal.lsa.apoyo');alert('Copiado!')">⎙</button></div><small style="margin-top:8px;display:block;font-size:11px">Tu aporte nos ayuda a mantener la plataforma gratuita y accesible.</small><div style="margin-top:12px;display:flex;gap:8px"><div style="flex:1;background:#fff;border-radius:8px;padding:8px;text-align:center;font-size:12px;font-weight:700">MHERRERA4872.NX.ARS</div><div style="flex:1;background:#fff;border-radius:8px;padding:8px;text-align:center;font-size:12px;font-weight:700">MHERRERA8437.NX.USD</div></div></div></div>
-<div class="footerNav"><span>⌂</span><span>💬</span><span>⚙</span></div>
+<div style="font-weight:700;color:#2C3E66;margin-bottom:10px">Traductor LSA en vivo</div>
+<div class="videoBox"><canvas id="c" width="480" height="280"></canvas><div class="badge">EN VIVO • LSA REAL</div><div id="palabra" class="palabraActual">ESPERANDO TEXTO</div></div>
+<button class="btnShare" onclick="compartir()">⬆ COMPARTIR VIDEO LSA</button>
+<div class="inputBox"><input id="txt" placeholder="Ej: Hola buenas noches bienvenidos"><button onclick="traducirReal()">➤</button></div>
+<div id="trad" class="traduccion">Escribí una frase y el avatar va a traducir palabra por palabra en LSA.</div>
+<div style="margin-top:18px;background:#E8EEF8;border-radius:12px;padding:14px"><small style="font-weight:700">Alias: universal.lsa.apoyo</small><br><small style="font-size:11px">Tu aporte mantiene la plataforma gratuita</small></div>
 </div>
 </div>
 <script>
-const cv=document.getElementById('c'),ctx=cv.getContext('2d');let t=0,blob=null,chunks=[],mr=null,anim=false;
-function draw(){
- ctx.fillStyle="#0F172A";ctx.fillRect(0,0,640,360);
- // Avatar profesional tipo foto - dibujo pro mejorado
- ctx.fillStyle="#E8C5A8";ctx.beginPath();ctx.arc(320,120,42,0,6.28);ctx.fill();
- ctx.fillStyle="#1E3A5F";ctx.beginPath();ctx.arc(320,75,46,3.14,6.28);ctx.fill();
- ctx.fillStyle="#DBEAFE";ctx.fillRect(275,165,90,80); // camisa
- ctx.fillStyle="#1E3A5F";ctx.fillRect(235,170,40,110);ctx.fillRect(365,170,40,110); // saco
- ctx.strokeStyle="#1E3A5F";ctx.lineWidth=18;ctx.lineCap="round";
- let s=anim?Math.sin(t*0.08)*20:0;t++;
- ctx.beginPath();ctx.moveTo(255,185);ctx.lineTo(190+s,225);ctx.lineTo(170+s,280);ctx.stroke();
- ctx.beginPath();ctx.moveTo(385,185);ctx.lineTo(410,225);ctx.lineTo(420,250);ctx.stroke();
- ctx.fillStyle="#E8C5A8";ctx.beginPath();ctx.arc(170+s,292,16,0,6.28);ctx.fill();
- ctx.beginPath();ctx.arc(420,262,14,0,6.28);ctx.fill();
- // dedo señalando
- ctx.fillStyle="#E8C5A8";ctx.fillRect(415,235,6,20);
- requestAnimationFrame(draw);
-}draw();
-function enviar(){
- let v=document.getElementById('txt').value.trim();
- if(!v)return alert("Escribí algo");
- document.getElementById('frase').innerText=v;
- document.getElementById('btnMain').innerText="⏺️ GRABANDO 4s...";
- anim=true;chunks=[];
- try{
-  let stream=cv.captureStream(30);
-  mr=new MediaRecorder(stream,{mimeType:'video/webm'});
-  mr.ondataavailable=e=>chunks.push(e.data);
-  mr.onstop=()=>{blob=new Blob(chunks,{type:'video/webm'});document.getElementById('btnMain').innerText="✅ COMPARTIR VIDEO LSA";anim=false};
-  mr.start();setTimeout(()=>mr.stop(),4000);
- }catch(e){setTimeout(()=>{document.getElementById('btnMain').innerText="✅ COMPARTIR VIDEO LSA";anim=false},1500)}
-}
-async function compartirVideo(){
- if(!blob &&!document.getElementById('frase').innerText){alert("Escribí y dale ➤ primero");return}
- let texto=document.getElementById('frase').innerText||"Universal LSA";
- if(blob){
-  let f=new File([blob],"universal-lsa.webm",{type:"video/webm"});
-  if(navigator.canShare&&navigator.canShare({files:[f]})){try{await navigator.share({files:[f],text:texto});return}catch(e){}}
+// DICCIONARIO LSA - gestos reales simplificados
+const LSA = {
+ "hola": { gesto: "saludo", desc: "Mano en frente, saludo" },
+ "chau": { gesto: "saludo", desc: "Mano moviendo" },
+ "bienvenidos": { gesto: "abrazos", desc: "Brazos abiertos, bienvenida" },
+ "bienvenido": { gesto: "abrazos", desc: "Brazos abiertos" },
+ "universal": { gesto: "circulo", desc: "Manos hacen círculo grande = universal" },
+ "buenas": { gesto: "buenas", desc: "Manos arriba y abajo" },
+ "noches": { gesto: "dormir", desc: "Manos juntas en mejilla = dormir/noche" },
+ "dias": { gesto: "sol", desc: "Mano en sol" },
+ "tardes": { gesto: "tardes", desc: "Sol bajando" },
+ "como": { gesto: "como", desc: "Manos girando ¿cómo?" },
+ "estas": { gesto: "estas", desc: "Señalando" },
+ "gracias": { gesto: "gracias", desc: "Mano en mentón hacia afuera" },
+ "por": { gesto: "por", desc: "Conectar" },
+ "favor": { gesto: "favor", desc: "Mano en pecho" },
+ "ayuda": { gesto: "ayuda", desc: "Manos levantando" },
+};
+
+let t=0, gestoActual="reposo", palabraActual="", anim=true, blob=null,chunks=[],mr=null;
+
+const cv=document.getElementById('c'),ctx=cv.getContext('2d');
+
+function dibujar(){
+ ctx.fillStyle="#ffffff";ctx.fillRect(0,0,480,280);
+ // cuerpo base
+ ctx.fillStyle="#E8C5A8";ctx.beginPath();ctx.arc(240,70,32,0,6.28);ctx.fill();
+ ctx.fillStyle="#1E293B";ctx.beginPath();ctx.arc(240,52,34,3.14,6.28);ctx.fill();
+ ctx.fillStyle="#C5D3E8";ctx.fillRect(200,102,80,85);
+ ctx.fillStyle="#5B7DB1";ctx.fillRect(175,105,25,85);ctx.fillRect(280,105,25,85);
+
+ // ANIMACIONES SEGUN GESTO
+ ctx.strokeStyle="#5B7DB1";ctx.lineWidth=16;ctx.lineCap="round";
+ let s1=Math.sin(t*0.15)*15, s2=Math.cos(t*0.15)*15;
+
+ if(gestoActual==="reposo"){
+   ctx.beginPath();ctx.moveTo(187,115);ctx.lineTo(135,155);ctx.lineTo(120,195);ctx.stroke();
+   ctx.beginPath();ctx.moveTo(293,115);ctx.lineTo(345,155);ctx.lineTo(360,195);ctx.stroke();
+ }else if(gestoActual==="saludo"){
+   ctx.beginPath();ctx.moveTo(293,115);ctx.lineTo(340,80+s1);ctx.lineTo(360,60+s1);ctx.stroke();
+   ctx.beginPath();ctx.moveTo(187,115);ctx.lineTo(135,155);ctx.lineTo(120,195);ctx.stroke();
+ }else if(gestoActual==="abrazos"){
+   ctx.beginPath();ctx.moveTo(187,115);ctx.lineTo(100+s1,140);ctx.lineTo(80+s1,180);ctx.stroke();
+   ctx.beginPath();ctx.moveTo(293,115);ctx.lineTo(380-s1,140);ctx.lineTo(400-s1,180);ctx.stroke();
+ }else if(gestoActual==="circulo"){
+   let r=40+Math.sin(t*0.1)*10;
+   ctx.beginPath();ctx.moveTo(187,115);ctx.lineTo(180+r*Math.cos(t*0.1),150+r*Math.sin(t*0.1));ctx.stroke();
+   ctx.beginPath();ctx.moveTo(293,115);ctx.lineTo(300+r*Math.cos(t*0.1+3.14),150+r*Math.sin(t*0.1+3.14));ctx.stroke();
+ }else if(gestoActual==="dormir"){
+   ctx.beginPath();ctx.moveTo(187,115);ctx.lineTo(210,140);ctx.lineTo(225,145);ctx.stroke();
+   ctx.beginPath();ctx.moveTo(293,115);ctx.lineTo(270,140);ctx.lineTo(255,145);ctx.stroke();
+ }else{
+   // gesto genérico moviendo
+   ctx.beginPath();ctx.moveTo(187,115);ctx.lineTo(135+s1,155);ctx.lineTo(120+s1,195);ctx.stroke();
+   ctx.beginPath();ctx.moveTo(293,115);ctx.lineTo(345+s2,155);ctx.lineTo(360+s2,195);ctx.stroke();
  }
- let url="https://marcooo85.github.io/universal-social-dynamics/";
- if(navigator.share){try{await navigator.share({title:"Universal",text:texto,url:url});return}catch(e){}}
- window.open("https://wa.me/?text="+encodeURIComponent(texto+" "+url),"_blank");
+
+ // manos
+ ctx.fillStyle="#E8C5A8";
+ if(gestoActual==="saludo"){ctx.beginPath();ctx.arc(360,60+s1,14,0,6.28);ctx.fill();ctx.beginPath();ctx.arc(120,195,12,0,6.28);ctx.fill();}
+ else if(gestoActual==="abrazos"){ctx.beginPath();ctx.arc(80+s1,180,13,0,6.28);ctx.fill();ctx.beginPath();ctx.arc(400-s1,180,13,0,6.28);ctx.fill();}
+ else{ctx.beginPath();ctx.arc(120,195,12,0,6.28);ctx.fill();ctx.beginPath();ctx.arc(360,195,12,0,6.28);ctx.fill();}
+
+ t++;
+ requestAnimationFrame(dibujar);
+}
+dibujar();
+
+let cola=[], indice=0, traduciendo=false;
+
+function traducirReal(){
+ let texto=document.getElementById('txt').value.toLowerCase().trim();
+ if(!texto)return alert("Escribí algo: Ej Hola buenas noches");
+
+ // Separar palabras y limpiar
+ cola=texto.split(" ").filter(p=>p.length>0);
+ indice=0;
+ traduciendo=true;
+
+ document.getElementById('trad').innerHTML="<b>Traduciendo:</b> "+cola.join(" • ");
+
+ // Iniciar grabación
+ try{
+  let stream=cv.captureStream(25);chunks=[];mr=new MediaRecorder(stream);
+  mr.ondataavailable=e=>chunks.push(e.data);
+  mr.onstop=()=>{blob=new Blob(chunks,{type:'video/webm'})};
+  mr.start();
+ }catch(e){}
+
+ siguientePalabra();
+}
+
+function siguientePalabra(){
+ if(indice>=cola.length){
+  document.getElementById('palabra').innerText="FIN • "+cola.join(" ");
+  gestoActual="reposo";
+  traduciendo=false;
+  try{mr.stop()}catch(e){}
+  return;
+ }
+
+ let p=cola[indice];
+ let info=LSA[p] || {gesto:"generico", desc:"Seña para '"+p+"'"};
+ gestoActual=info.gesto;
+ palabraActual=p;
+ document.getElementById('palabra').innerText=p.toUpperCase()+" • "+info.desc;
+ document.getElementById('trad').innerHTML="<b>Ahora:</b> "+p.toUpperCase()+" <br><small>"+info.desc+"</small><br><br><b>Cola:</b> "+cola.map((w,i)=> i===indice? "<u>"+w+"</u>" : w).join(" ");
+
+ indice++;
+ setTimeout(siguientePalabra, 1800); // 1.8s por palabra LSA
+}
+
+async function compartir(){
+ if(!blob){alert("Primero traducí algo con ➤");return}
+ let f=new File([blob],"lsa.webm",{type:"video/webm"});
+ if(navigator.canShare&&navigator.canShare({files:[f]})){
+  try{await navigator.share({files:[f],text:"Traducción LSA: "+document.getElementById('txt').value});return}catch(e){}
+ }
+ let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download="lsa.webm";a.click();
 }
 </script>
 </body>
