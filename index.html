@@ -3,77 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Universal - Traductor LSA</title>
+<title>UNIVERSAL - LSA Azul Profesional</title>
 <style>
 *{box-sizing:border-box;font-family:system-ui,sans-serif;margin:0;padding:0}
-body{background:#000;color:#fff;text-align:center;padding-bottom:20px}
-header{background:#e0e0e0;color:#111;padding:14px;font-weight:900}
-#videoBox{position:relative;width:96%;max-width:520px;height:540px;margin:12px auto 0 auto;background:#000;border:4px solid #fff;border-radius:20px 20px 0 0;overflow:hidden}
-#videoBox iframe{width:100%;height:115%;border:none;margin-top:-35px;filter:contrast(180%) brightness(125%)}
-#misBotones{position:absolute;bottom:12px;right:12px;display:flex;gap:10px;z-index:10}
-.btnCirc{width:52px;height:52px;border-radius:50%;border:none;background:#FFD600;color:#000;font-size:22px;font-weight:900;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,0.8);display:flex;align-items:center;justify-content:center}
-#btnCompartirGigante{width:96%;max-width:520px;margin:0 auto 12px auto;background:#25D366;color:#fff;border:none;border-radius:0 0 20px 20px;padding:18px;font-size:20px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;box-shadow:0 4px 12px rgba(37,211,102,0.4)}
-#btnCompartirGigante:active{transform:scale(0.98)}
-#texto{margin:10px auto;max-width:520px;background:#111;border-radius:10px;padding:10px;color:#FF6D00;font-weight:900;font-size:17px;min-height:44px;display:flex;align-items:center;justify-content:center}
-.btn{width:96%;max-width:520px;padding:16px;margin:7px auto;border:none;border-radius:14px;font-weight:900;font-size:16px;cursor:pointer;display:block}
-.btn-accion{background:#e0e0e0;color:#111}
-input{width:96%;max-width:520px;padding:14px;border-radius:12px;background:#111;color:#fff;border:2px solid #333;font-size:16px;margin:6px auto;display:block}
-.box{width:96%;max-width:520px;margin:14px auto;background:#111;border:1px solid #2a2a2a;padding:16px;border-radius:16px;text-align:left}
-.aliasBox{display:flex;justify-content:space-between;align-items:center;background:#000;border:1px dashed #555;border-radius:12px;padding:12px;margin:10px 0}
+body{background:#E6EEF7;color:#1E293B}
+header{background:#5B7DB1;color:#fff;padding:16px 20px;font-weight:800;font-size:15px;letter-spacing:1px;display:flex;align-items:center;justify-content:space-between;border-radius:0 0 18px 18px}
+#contenedor{max-width:480px;margin:0 auto;padding:0 14px 30px}
+#videoBox{width:100%;height:400px;margin:18px auto 0;background:#fff;border-radius:20px;overflow:hidden;box-shadow:0 8px 30px rgba(91,125,177,0.15);border:4px solid #fff;position:relative}
+canvas{width:100%;height:100%}
+#btnGif{width:100%;background:#5B7DB1;color:#fff;border:none;border-radius:14px;padding:16px;font-size:15px;font-weight:800;cursor:pointer;margin:14px 0}
+.filaBtns{display:flex;gap:10px;margin:10px 0}
+.btnSoft{background:#C5D3E8;color:#34495E;border:none;border-radius:24px;padding:10px 16px;font-weight:600;font-size:13px;cursor:pointer;flex:1}
+.inputBox{width:100%;background:#fff;border-radius:12px;padding:12px 16px;display:flex;align-items:center;border:1px solid #D6E2F0;margin-top:8px}
+.inputBox input{border:none;outline:none;width:100%;font-size:14px}
+.inputBox button{background:none;border:none;color:#5B7DB1;font-size:18px;cursor:pointer;font-weight:800}
+.box{width:100%;margin:18px 0;background:#fff;border-radius:16px;padding:18px;box-shadow:0 4px 15px rgba(91,125,177,0.1)}
 </style>
 </head>
 <body>
-<header>UNIVERSAL SOCIAL DYNAMICS</header>
-
+<header><span>← UNIVERSAL LSA</span><span>•••</span></header>
+<div id="contenedor">
+<div style="margin:16px 4px 0;font-weight:800;font-size:18px;color:#2C3E66">Traductor LSA en vivo</div>
 <div id="videoBox">
-  <iframe id="avatar" src="https://sign.mt/?text=Hola,%20bienvenidos%20a%20Universal&lang=ase"></iframe>
-  <div id="misBotones">
-    <button class="btnCirc" onclick="descargar()" title="Descargar">⬇️</button>
-    <button class="btnCirc" onclick="compartir()" title="Compartir">🔗</button>
-  </div>
-</div>
-
-<!-- BOTON GIGANTE QUE SE NOTA -->
-<button id="btnCompartirGigante" onclick="compartir()">📤 COMPARTIR ESTE VIDEO</button>
-
-<div id="texto">Hola, bienvenidos a Universal</div>
-
-<button id="grabar" class="btn btn-accion">🎤 TOCAR PARA HABLAR</button>
-<input id="escribir" placeholder="Escribí: hola, gracias, por favor">
-<button id="btnT" class="btn btn-accion">GENERAR VIDEO LSA ▶️</button>
-
-<div class="box">
-<p style="text-align:center;font-weight:900">🙏 APOYÁ ESTE PROYECTO</p>
-<div class="aliasBox">
-<span style="font-weight:900;font-size:14px">MHERRERA4872.NX.ARS</span>
-<button onclick="copiar('MHERRERA4872.NX.ARS','pesos')" style="background:#FF6D00;border:none;padding:10px 16px;border-radius:9px;font-weight:900;color:#fff">COPIAR</button>
-</div>
-<div class="aliasBox">
-<span style="font-weight:900;font-size:14px">MHERRERA8437.NX.USD</span>
-<button onclick="copiar('MHERRERA8437.NX.USD','dolar')" style="background:#00D26A;border:none;padding:10px 16px;border-radius:9px;font-weight:900;color:#000">COPIAR</button>
-</div>
-<p id="okPesos" style="color:#00D26A;font-size:12px;display:none;text-align:right">✅ Copiado!</p>
-<p id="okDolar" style="color:#00D26A;font-size:12px;display:none;text-align:right">✅ Copiado!</p>
-<p style="text-align:center;color:#555;font-size:11px;margin-top:10px">Visitas: <span id="visitas">...</span></p>
-</div>
-
-<script>
-let ultimaFrase="Hola, bienvenidos a Universal";
-function generar(f){if(!f)return;ultimaFrase=f;document.getElementById('texto').innerText=f;document.getElementById('avatar').src="https://sign.mt/?text="+encodeURIComponent(f)+"&lang=ase";}
-function copiar(t,ti){navigator.clipboard.writeText(t);let e=document.getElementById(ti==='pesos'?'okPesos':'okDolar');e.style.display='block';setTimeout(()=>e.style.display='none',2000);}
-function compartir(){
-  let url="https://marcooo85.github.io/universal-social-dynamics/";
-  let m="Mirá este Traductor LSA: '"+ultimaFrase+"' - Probalo acá: "+url+" 🙏";
-  if(navigator.share){navigator.share({title:"Universal LSA",text:m,url:url})}else{window.open("https://wa.me/?text="+encodeURIComponent(m),"_blank")}
-}
-function descargar(){
-  let b=new Blob(["Frase: "+ultimaFrase+"\nLink: https://marcooo85.github.io/universal-social-dynamics/"],{type:"text/plain"});
-  let a=document.createElement('a');a.href=URL.createObjectURL(b);a.download="universal.txt";a.click();
-}
-fetch('https://api.countapi.xyz/hit/marcooo85-universal-final-2026/visitas').then(r=>r.json()).then(d=>{document.getElementById('visitas').innerText=d.value}).catch(()=>{document.getElementById('visitas').innerText="312"});
-let rec=null;try{rec=new(window.SpeechRecognition||window.webkitSpeechRecognition)();rec.lang='es-AR'}catch{}
-if(rec){rec.onresult=e=>generar(e.results[0][0].transcript);document.getElementById('grabar').onclick=()=>{try{rec.start();document.getElementById('grabar').innerText="🔴 ESCUCHANDO...";setTimeout(()=>document.getElementById('grabar').innerText="🎤 TOCAR PARA HABLAR",3000)}catch{}};}
-document.getElementById('btnT').onclick=()=>generar(document.getElementById('escribir').value);
-</script>
-</body>
-</html>
