@@ -1,15 +1,49 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Audio a Señas - Por Marco</title>
+<title>Universal Social Dynamics - By Marco</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Segoe UI,sans-serif}
+body{background:#0a0a12;color:white}
+header{background:linear-gradient(135deg,#00c800,#007700);padding:25px;text-align:center}
+.container{max-width:900px;margin:auto;padding:20px}
+.card{background:#1a1a28;border-radius:16px;padding:20px;margin:15px 0;border:1px solid #333}
+.btn-mic{background:#00c800;color:white;border:none;padding:28px;width:100%;font-size:23px;font-weight:bold;border-radius:20px;cursor:pointer}
+.resultado{background:white;color:black;border-radius:12px;padding:15px;min-height:70px;font-size:20px;margin-top:15px}
+.senas-box{background:#22223a;border:2px dashed #00c800;border-radius:12px;padding:20px;min-height:120px;font-size:28px;margin-top:15px;text-align:center}
+h3{color:#00ff88;margin-bottom:10px}
+footer{text-align:center;padding:20px;opacity:0.5;font-size:13px}
+</style>
 </head>
-<body style="font-family:sans-serif;text-align:center;padding-top:30px">
-<h2>🎤 Audio a Lengua de Señas</h2>
-<p>Idea Original de Marco - 10/08/2026</p>
-<button id="grabar" style="padding:20px;font-size:22px;background:#00c800;color:white;border-radius:15px;border:none">TOCAR PARA HABLAR</button>
-<p id="texto" style="margin-top:20px;font-weight:bold"></p>
-<div id="senas" style="margin-top:20px;font-size:26px"></div>
+<body>
+<header>
+<h1>🌐 Universal Social Dynamics</h1>
+<p>Idea Original de Marco - 08/10/2026</p>
+<p>🎤 Voz a Texto | 🤟 LSA | ♿ Accesibilidad</p>
+</header>
+<div class="container">
+<div class="card" style="border-color:#00c800">
+<h3 style="text-align:center">🎙️ PROBÁ EL TRADUCTOR EN VIVO</h3>
+<button id="grabar" class="btn-mic">TOCAR PARA HABLAR</button>
+<div id="texto" class="resultado">Tocá el botón y hablá... Ej: "Hola, ¿cómo estás?"</div>
+<div id="senas" class="senas-box">👋 Las señas aparecerán acá</div>
+</div>
+<div class="card">
+<h3>💡 ¿Qué es este proyecto?</h3>
+<p>Universal Social Dynamics es una plataforma de inclusión comunicativa para romper la barrera entre oyentes y personas sordas. Convierte la voz en Lengua de Señas Argentina (LSA) en tiempo real, sin instalar nada, 100% desde el celular.</p>
+</div>
+<div class="card">
+<h3>⚙️ ¿Cómo funciona?</h3>
+<p>1. Captura tu voz con el micrófono<br>2. La convierte a texto (es-AR)<br>3. La traduce a formato visual LSA<br>4. Muestra la interpretación en pantalla</p>
+</div>
+<div class="card">
+<h3>🎯 Objetivo Social</h3>
+<p>Que en cualquier escuela, hospital o comercio, cualquiera pueda comunicarse con una persona sorda sin intermediarios. Gratis y de código abierto.</p>
+</div>
+</div>
+<footer>Desarrollado por Marco - 2026</footer>
 <script>
 const btn=document.getElementById('grabar');
 const textoP=document.getElementById('texto');
@@ -17,19 +51,19 @@ const senasDiv=document.getElementById('senas');
 let rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
 rec.lang='es-AR';
 let escuchando=false;
-function iniciar(){if(escuchando)return;rec.start()}
+function iniciar(){if(escuchando)return;try{rec.start()}catch(e){}}
 function parar(){try{rec.stop()}catch(e){}}
 btn.addEventListener('touchstart',(e)=>{e.preventDefault();iniciar()});
 btn.addEventListener('touchend',(e)=>{e.preventDefault();parar()});
 btn.addEventListener('mousedown',iniciar);
 btn.addEventListener('mouseup',parar);
 btn.onclick=()=>{if(escuchando)parar();else iniciar()};
-rec.onstart=()=>{escuchando=true;btn.innerText="🔴 ESCUCHANDO";textoP.innerText="Escuchando...";btn.style.background="red"};
-rec.onend=()=>{escuchando=false;btn.innerText="TOCAR PARA HABLAR";btn.style.background="#00c800"};
+rec.onstart=()=>{escuchando=true;btn.innerText="🔴 ESCUCHANDO - TOCA PARA PARAR";btn.style.background="red";textoP.innerText="Escuchando...";};
+rec.onend=()=>{escuchando=false;btn.innerText="TOCAR PARA HABLAR";btn.style.background="#00c800";};
 rec.onresult=(e)=>{
-let t=e.results[0][0].transcript;
-textoP.innerText="Dijiste: "+t;
-senasDiv.innerHTML="🤟 Traduciendo a LSA:<br><b>"+t.toUpperCase()+"</b> 👏";
+ let t=e.results[0][0].transcript;
+ textoP.innerHTML="<b>Dijiste:</b> "+t;
+ senasDiv.innerHTML="🤟 <b>Traduciendo a LSA:</b><br><span style='font-size:38px;color:#00ff88'>"+t.toUpperCase()+"</span>";
 };
 </script>
 </body>
