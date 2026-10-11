@@ -3,52 +3,67 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UNIVERSAL SOCIAL DYNAMICS - PROPIO</title>
+<title>UNIVERSAL SOCIAL DYNAMICS - LSA</title>
 <style>
- body{margin:0;background:#0a1931;font-family:Arial;text-align:center}
- header{background:#08162b;color:#00d4ff;padding:12px;font-weight:bold;letter-spacing:1px}
- #escena{height:320px;display:flex;justify-content:center;align-items:center;background:radial-gradient(circle,#1a2a4a,#0a1931);margin:0;position:relative}
-.avatar{position:relative;width:140px;height:260px}
-.sombra{position:absolute;bottom:0;width:80px;height:12px;background:rgba(0,0,0,0.4);border-radius:50%;left:30px}
-.cabeza{width:62px;height:62px;background:#ffcf9e;border-radius:50%;margin:0 auto;border:3px solid #00d4ff;position:relative;z-index:5}
-.gorra{width:68px;height:22px;background:#00d4ff;border-radius:20px 20px 0 0;position:absolute;top:-8px;left:-3px;z-index:6}
-.cuerpo{width:58px;height:72px;background:linear-gradient(#eef2ff,#cbd5ff);margin:-4px auto 0;border-radius:12px;border:2px solid #0a1931;position:relative;z-index:3}
-.brazo{position:absolute;top:68px;width:14px;height:58px;background:#a8b8ff;border-radius:10px;transform-origin:top center;transition:0.35s;border:2px solid #0a1931;z-index:2}
-.brazo.izq{left:22px;transform:rotate(25deg)}.brazo.der{right:22px;transform:rotate(-25deg)}
-.mano{width:18px;height:18px;background:#ffcf9e;border-radius:50%;position:absolute;bottom:-8px;left:-2px;border:2px solid #0a1931}
-.pierna{position:absolute;top:136px;width:18px;height:60px;background:#0a1931;border-radius:10px;transform-origin:top center;z-index:1;border:2px solid #00d4ff}
-.pierna.izq{left:44px;transform:rotate(8deg)}.pierna.der{right:44px;transform:rotate(-8deg)}
- /* GESTOS PROPIOS */
-.g-saludo.brazo.der{transform:rotate(-160deg) translateY(-5px)!important;animation:sal 0.4s infinite alternate}
-.g-noche{transform:translateY(10px)}.g-noche.brazo{transform:rotate(0deg)!important}.g-noche.brazo.izq{transform:rotate(50deg)!important}.g-noche.brazo.der{transform:rotate(-50deg)!important}.g-noche.cabeza{transform:rotate(20deg) translateY(8px)}
-.g-si.cabeza{animation:si 0.25s infinite alternate}.g-no.cabeza{animation:no 0.25s infinite alternate}
-.g-otra{animation:otra 0.2s}
- @keyframes sal{from{transform:rotate(-145deg)}to{transform:rotate(-175deg)}}
- @keyframes si{from{transform:translateY(0)}to{transform:translateY(10px)}}
- @keyframes no{from{transform:rotate(-18deg)}to{transform:rotate(18deg)}}
- @keyframes otra{0%,100%{transform:translateX(0)}50%{transform:translateX(3px)}}
- #panel{background:white;padding:14px;border-radius:20px 20px 0 0;margin-top:-20px;position:relative;z-index:10;min-height:180px}
- #estado{background:#0a1931;color:#00d4ff;padding:12px;border-radius:12px;font-weight:bold;font-size:18px;border:2px solid #00d4ff}
- #texto{width:68%;padding:14px;border-radius:12px;border:2px solid #0a1931;font-size:16px;margin-top:10px}
- #btn{padding:14px 20px;background:#00d4ff;color:#0a1931;border:none;border-radius:12px;font-weight:bold;font-size:18px;margin-left:6px}
- #log{background:#eef2ff;padding:10px;border-radius:10px;font-size:13px;text-align:left;margin-top:10px}
+  body{margin:0;background:#f0f4ff;font-family:Arial;text-align:center}
+  header{background:#0a1931;color:white;padding:12px;font-weight:bold}
+  #escena{height:280px;display:flex;justify-content:center;align-items:center;background:white;margin:15px;border-radius:20px}
+ .muneco{position:relative;width:120px;height:220px}
+ .cabeza{width:50px;height:50px;background:#ffdbac;border-radius:50%;margin:0 auto;border:3px solid #333;position:relative;z-index:2}
+ .cuerpo{width:4px;height:70px;background:#333;margin:0 auto}
+ .brazo{position:absolute;top:60px;width:4px;height:60px;background:#e74c3c;transform-origin:top center;border-radius:2px;transition:0.4s}
+ .brazo.izq{left:32px;background:#3498db;transform:rotate(30deg)}
+ .brazo.der{right:32px;background:#3498db;transform:rotate(-30deg)}
+ .pierna{position:absolute;top:125px;width:4px;height:65px;background:#2ecc71;transform-origin:top center;border-radius:2px}
+ .pierna.izq{left:48px;transform:rotate(15deg)}
+ .pierna.der{right:48px;transform:rotate(-15deg)}
+ .saludo.brazo.der{transform:rotate(-150deg)!important;animation:saludar 0.5s infinite alternate}
+ .noche.brazo.izq{transform:rotate(60deg)!important}
+ .noche.brazo.der{transform:rotate(-60deg)!important}
+ .noche.cabeza{transform:rotate(20deg)}
+ .si.cabeza{animation:si 0.3s infinite alternate}
+ .no.cabeza{animation:no 0.3s infinite alternate}
+  @keyframes saludar{from{transform:rotate(-130deg)}to{transform:rotate(-170deg)}}
+  @keyframes si{from{transform:translateY(0)}to{transform:translateY(8px)}}
+  @keyframes no{from{transform:rotate(-15deg)}to{transform:rotate(15deg)}}
+  #panel{margin:10px;padding:10px}
+  #texto{width:70%;padding:12px;border-radius:10px;border:2px solid #0a1931;font-size:16px}
+  #btn{padding:12px 18px;background:#0a1931;color:white;border:none;border-radius:10px;margin-left:5px}
+  #estado{background:#0a1931;color:white;padding:10px;border-radius:10px;margin:10px;font-weight:bold;min-height:20px}
+  #log{background:#e8eeff;padding:8px;border-radius:10px;font-size:13px;text-align:left}
 </style>
 </head>
 <body>
-<header>⚡ UNIVERSAL SOCIAL DYNAMICS - MODELO PROPIO ⚡</header>
-<div id="escena"><div id="avatar" class="avatar"><div class="cabeza"><div class="gorra"></div></div><div class="brazo izq"><div class="mano"></div></div><div class="brazo der"><div class="mano"></div></div><div class="cuerpo"></div><div class="pierna izq"></div><div class="pierna der"></div><div class="sombra"></div></div></div>
-<div id="panel"><div id="estado">FIN - LISTO PARA ANIMAR</div><input id="texto" value="Hola buenas noches vas a venir hoy?" placeholder="Escribí acá"><button id="btn" onclick="traducir()">▶</button><div id="log">Tu avatar propio - Quedan: -</div></div>
+<header>UNIVERSAL SOCIAL DYNAMICS - LSA REAL</header>
+<div id="escena"><div id="muneco" class="muneco"><div class="cabeza"></div><div class="brazo izq"></div><div class="brazo der"></div><div class="cuerpo"></div><div class="pierna izq"></div><div class="pierna der"></div></div></div>
+<div id="estado">FIN</div>
+<div id="panel"><input id="texto" value="Hola buenas noches" placeholder="Escribí acá"><button id="btn" onclick="traducir()">▶</button><div id="log"></div></div>
 <script>
-let palabras=[],i=0,t=null;
-const dic={ "hola":"saludo","buenas":"saludo","chau":"saludo","buenas noches":"noche","noches":"noche","noche":"noche","si":"si","sí":"si","no":"no","gracias":"saludo" };
-function traducir(){clearTimeout(t);let txt=document.getElementById('texto').value.toLowerCase().replace(/[?¿!¡.,]/g,'');palabras=txt.split(' ').filter(p=>p);i=0;siguiente();}
+let palabras=[], indice=0, timer=null;
+const diccionario={"hola":"saludo","buenas":"saludo","chau":"saludo","adios":"saludo","noches":"noche","noche":"noche","dormir":"noche","si":"si","sí":"si","no":"no"};
+function traducir(){
+  clearInterval(timer);
+  let texto=document.getElementById('texto').value.toLowerCase().replace(/[?¿!¡.,]/g,'');
+  palabras=texto.split(' ').filter(p=>p.trim()!='');
+  indice=0;
+  document.getElementById('log').innerHTML="Quedan: "+palabras.join(', ');
+  if(palabras.length>0) siguiente();
+}
 function siguiente(){
- if(i>=palabras.length){document.getElementById('estado').innerText="FIN";document.getElementById('avatar').className="avatar";return;}
- let p=palabras[i]; let g=dic[p]||"otra";
- document.getElementById('estado').innerText=p.toUpperCase()+" → "+g.toUpperCase();
- document.getElementById('avatar').className="avatar g-"+g;
- document.getElementById('log').innerHTML="Ahora: <b>"+p.toUpperCase()+" = "+g.toUpperCase()+"</b><br>Quedan: "+palabras.slice(i+1).join(', ');
- i++; t=setTimeout(siguiente,1400);
+  if(indice>=palabras.length){
+    document.getElementById('estado').innerText="FIN";
+    document.getElementById('muneco').className="muneco";
+    return;
+  }
+  let palabra=palabras[indice];
+  let gesto=diccionario[palabra] || "otra";
+  document.getElementById('estado').innerText=palabra.toUpperCase()+" → "+gesto.toUpperCase();
+  let m=document.getElementById('muneco');
+  m.className="muneco "+gesto;
+  if(gesto=="otra"){ m.className="muneco"; }
+  document.getElementById('log').innerHTML="Ahora: <b>"+palabra.toUpperCase()+" = "+gesto.toUpperCase()+"</b><br>Quedan: "+palabras.slice(indice+1).join(', ');
+  indice++;
+  timer=setTimeout(siguiente, 1500);
 }
 </script>
 </body>
