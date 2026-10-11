@@ -3,68 +3,100 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UNIVERSAL SOCIAL DYNAMICS - LSA</title>
+<title>UNIVERSAL SOCIAL DYNAMICS - PRO</title>
 <style>
-  body{margin:0;background:#f0f4ff;font-family:Arial;text-align:center}
-  header{background:#0a1931;color:white;padding:12px;font-weight:bold}
-  #escena{height:280px;display:flex;justify-content:center;align-items:center;background:white;margin:15px;border-radius:20px}
- .muneco{position:relative;width:120px;height:220px}
- .cabeza{width:50px;height:50px;background:#ffdbac;border-radius:50%;margin:0 auto;border:3px solid #333;position:relative;z-index:2}
- .cuerpo{width:4px;height:70px;background:#333;margin:0 auto}
- .brazo{position:absolute;top:60px;width:4px;height:60px;background:#e74c3c;transform-origin:top center;border-radius:2px;transition:0.4s}
- .brazo.izq{left:32px;background:#3498db;transform:rotate(30deg)}
- .brazo.der{right:32px;background:#3498db;transform:rotate(-30deg)}
- .pierna{position:absolute;top:125px;width:4px;height:65px;background:#2ecc71;transform-origin:top center;border-radius:2px}
- .pierna.izq{left:48px;transform:rotate(15deg)}
- .pierna.der{right:48px;transform:rotate(-15deg)}
- .saludo.brazo.der{transform:rotate(-150deg)!important;animation:saludar 0.5s infinite alternate}
- .noche.brazo.izq{transform:rotate(60deg)!important}
- .noche.brazo.der{transform:rotate(-60deg)!important}
- .noche.cabeza{transform:rotate(20deg)}
- .si.cabeza{animation:si 0.3s infinite alternate}
- .no.cabeza{animation:no 0.3s infinite alternate}
-  @keyframes saludar{from{transform:rotate(-130deg)}to{transform:rotate(-170deg)}}
-  @keyframes si{from{transform:translateY(0)}to{transform:translateY(8px)}}
-  @keyframes no{from{transform:rotate(-15deg)}to{transform:rotate(15deg)}}
-  #panel{margin:10px;padding:10px}
-  #texto{width:70%;padding:12px;border-radius:10px;border:2px solid #0a1931;font-size:16px}
-  #btn{padding:12px 18px;background:#0a1931;color:white;border:none;border-radius:10px;margin-left:5px}
-  #estado{background:#0a1931;color:white;padding:10px;border-radius:10px;margin:10px;font-weight:bold;min-height:20px}
-  #log{background:#e8eeff;padding:8px;border-radius:10px;font-size:13px;text-align:left}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
+body{background:#0a0a0a;color:white;text-align:center}
+header{background:white;color:black;padding:12px;font-weight:900;font-size:16px;letter-spacing:0.5px}
+.caja{margin:12px;border:3px solid white;border-radius:22px;overflow:hidden;background:black;position:relative}
+.top{display:flex;justify-content:space-around;align-items:center;padding:12px;background:#111}
+.top b{color:#f7c600;font-size:16px}
+.aviso{background:#111;color:#ccc;font-size:12px;padding:8px 12px;text-align:left;border-top:1px solid #222;border-bottom:1px solid #222;display:flex;gap:8px}
+#canvasArea{height:360px;background:black;position:relative;display:flex;justify-content:center;align-items:center}
+canvas{width:100%;height:100%}
+.btns-flot{position:absolute;right:12px;bottom:50px;display:flex;gap:10px}
+.circle{width:48px;height:48px;background:#f7c600;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:22px;color:black;font-weight:bold}
+.input-voz{position:absolute;bottom:8px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center}
+.input-voz span{font-size:15px}
+.mic{color:#f7c600;font-size:20px}
+.estado{color:#ff6a00;font-weight:bold;margin:12px;font-size:16px}
+.btn-mic{background:#e8e8e8;color:black;padding:16px;border-radius:14px;border:none;width:92%;font-weight:900;font-size:16px;margin:0 auto;display:block}
+.btn-text{background:#1a1a1a;color:#666;padding:14px;border-radius:12px;border:1px solid #333;width:92%;margin:10px auto;display:block;text-align:left}
+.btn-gen{background:#e8e8e8;color:black;padding:14px;border-radius:12px;border:none;width:92%;font-weight:900;margin:10px auto;display:block}
 </style>
 </head>
 <body>
-<header>UNIVERSAL SOCIAL DYNAMICS - LSA REAL</header>
-<div id="escena"><div id="muneco" class="muneco"><div class="cabeza"></div><div class="brazo izq"></div><div class="brazo der"></div><div class="cuerpo"></div><div class="pierna izq"></div><div class="pierna der"></div></div></div>
-<div id="estado">FIN</div>
-<div id="panel"><input id="texto" value="Hola buenas noches" placeholder="Escribí acá"><button id="btn" onclick="traducir()">▶</button><div id="log"></div></div>
+<header>UNIVERSAL SOCIAL DYNAMICS</header>
+<div class="caja">
+<div class="top"><b>English</b><span>→</span><b>🇺🇸 American</b></div>
+<div class="aviso"><span>ⓘ</span> The latest Sign models are currently in research preview and are not available to the public.</div>
+<div id="canvasArea">
+<canvas id="c"></canvas>
+<div class="btns-flot"><div class="circle">⇩</div><div class="circle">⤴</div></div>
+<div class="input-voz"><span>➕ &nbsp; <span id="textoActual">Hola, bienvenidos</span></span><span class="mic">🎙️</span></div>
+</div>
+</div>
+<div class="estado" id="estado">Listo para traducir</div>
+<button class="btn-mic" onclick="escuchar()">🎤 TOCAR PARA HABLAR</button>
+<input class="btn-text" id="inputTexto" placeholder="Escribí: hola, gracias, por favor" onkeydown="if(event.key==='Enter')traducir()">
+<button class="btn-gen" onclick="traducir()">GENERAR VIDEO LSA ▶️</button>
 <script>
-let palabras=[], indice=0, timer=null;
-const diccionario={"hola":"saludo","buenas":"saludo","chau":"saludo","adios":"saludo","noches":"noche","noche":"noche","dormir":"noche","si":"si","sí":"si","no":"no"};
+const canvas=document.getElementById('c'); const ctx=canvas.getContext('2d');
+function resize(){canvas.width=canvas.parentElement.clientWidth*2;canvas.height=canvas.parentElement.clientHeight*2;} resize();
+let t=0; let animando=false;
+function dibujar(senna){
+ ctx.clearRect(0,0,canvas.width,canvas.height);
+ const cx=canvas.width/2, cy=canvas.height/2+20;
+ // cabeza roja
+ ctx.strokeStyle='#ff1a1a'; ctx.lineWidth=6; ctx.lineCap='round';
+ ctx.beginPath(); ctx.roundRect(cx-55,cy-160,110,85,20); ctx.stroke();
+ ctx.beginPath(); ctx.arc(cx-20,cy-135,8,0,6.28); ctx.stroke(); ctx.beginPath(); ctx.arc(cx+20,cy-135,8,0,6.28); ctx.stroke();
+ ctx.beginPath(); ctx.arc(cx,cy-110,12,0,3.14); ctx.stroke();
+ // cuerpo y piernas rojas
+ ctx.beginPath(); ctx.moveTo(cx+50,cy-60); ctx.lineTo(cx+80,cy+80); ctx.lineTo(cx+20,cy-50); ctx.lineTo(cx-20,cy-50); ctx.lineTo(cx-80,cy+80); ctx.lineTo(cx-50,cy-60); ctx.stroke();
+ // brazo derecho segun seña
+ let ax=cx-50, ay=cy-60, bx=cx-90, by=cy+40, mx, my;
+ if(senna==='hola'){ bx=cx-120+Math.sin(t)*20; by=cy-80+Math.cos(t)*10; }
+ if(senna==='gracias'){ bx=cx-20; by=cy-100; }
+ ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.lineTo(bx-20,by+80); ctx.stroke();
+ // mano colores
+ if(animando){
+   ctx.lineWidth=4;
+   const colores=['#ff0000','#00ff00','#0080ff','#ffff00','#ff00ff'];
+   for(let i=0;i<5;i++){
+     ctx.strokeStyle=colores[i];
+     ctx.beginPath(); ctx.moveTo(bx,by); ctx.lineTo(bx-25+Math.sin(t+i)*10,by-30-i*8); ctx.stroke();
+   }
+ }
+ t+=0.15;
+}
+setInterval(()=>dibujar('idle'),33);
+const dic={'hola':'hola','bienvenidos':'hola','gracias':'gracias','por favor':'gracias','como':'hola','estas':'hola'};
+let cola=[], idx=0, timer=null;
 function traducir(){
-  clearInterval(timer);
-  let texto=document.getElementById('texto').value.toLowerCase().replace(/[?¿!¡.,]/g,'');
-  palabras=texto.split(' ').filter(p=>p.trim()!='');
-  indice=0;
-  document.getElementById('log').innerHTML="Quedan: "+palabras.join(', ');
-  if(palabras.length>0) siguiente();
+ clearInterval(timer); let txt=document.getElementById('inputTexto').value || document.getElementById('textoActual').innerText;
+ if(!txt) txt='Hola, bienvenidos';
+ document.getElementById('textoActual').innerText=txt;
+ cola=txt.toLowerCase().replace(/[.,]/g,'').split(' ').filter(x=>x); idx=0; animando=true; siguiente();
 }
 function siguiente(){
-  if(indice>=palabras.length){
-    document.getElementById('estado').innerText="FIN";
-    document.getElementById('muneco').className="muneco";
-    return;
-  }
-  let palabra=palabras[indice];
-  let gesto=diccionario[palabra] || "otra";
-  document.getElementById('estado').innerText=palabra.toUpperCase()+" → "+gesto.toUpperCase();
-  let m=document.getElementById('muneco');
-  m.className="muneco "+gesto;
-  if(gesto=="otra"){ m.className="muneco"; }
-  document.getElementById('log').innerHTML="Ahora: <b>"+palabra.toUpperCase()+" = "+gesto.toUpperCase()+"</b><br>Quedan: "+palabras.slice(indice+1).join(', ');
-  indice++;
-  timer=setTimeout(siguiente, 1500);
+ if(idx>=cola.length){ document.getElementById('estado').innerText='Listo para traducir'; animando=false; return; }
+ let p=cola[idx]; let s=dic[p]||'hola';
+ document.getElementById('estado').innerText='Traduciendo: '+p.toUpperCase()+' → '+s.toUpperCase();
+ dibujar(s);
+ idx++; timer=setTimeout(siguiente,1200);
 }
+function escuchar(){
+ const rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
+ rec.lang='es-AR'; rec.onresult=e=>{
+   let txt=e.results[0][0].transcript;
+   document.getElementById('inputTexto').value=txt;
+   document.getElementById('textoActual').innerText=txt;
+   traducir();
+ }; rec.start();
+ document.getElementById('estado').innerText='Escuchando...';
+}
+dibujar('idle');
 </script>
 </body>
 </html>
