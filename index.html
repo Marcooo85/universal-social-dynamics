@@ -2,101 +2,102 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>UNIVERSAL SOCIAL DYNAMICS - PRO</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Universal - LSA GIF</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial}
-body{background:#0a0a0a;color:white;text-align:center}
-header{background:white;color:black;padding:12px;font-weight:900;font-size:16px;letter-spacing:0.5px}
-.caja{margin:12px;border:3px solid white;border-radius:22px;overflow:hidden;background:black;position:relative}
-.top{display:flex;justify-content:space-around;align-items:center;padding:12px;background:#111}
-.top b{color:#f7c600;font-size:16px}
-.aviso{background:#111;color:#ccc;font-size:12px;padding:8px 12px;text-align:left;border-top:1px solid #222;border-bottom:1px solid #222;display:flex;gap:8px}
-#canvasArea{height:360px;background:black;position:relative;display:flex;justify-content:center;align-items:center}
+*{box-sizing:border-box;font-family:system-ui,sans-serif;margin:0;padding:0}
+body{background:#000;color:#fff;text-align:center}
+header{background:#FF6D00;color:#000;padding:14px;font-weight:900}
+#videoBox{width:96%;max-width:520px;height:520px;margin:12px auto 0 auto;background:#000;border:4px solid #fff;border-radius:20px 20px 0 0;position:relative;overflow:hidden}
 canvas{width:100%;height:100%}
-.btns-flot{position:absolute;right:12px;bottom:50px;display:flex;gap:10px}
-.circle{width:48px;height:48px;background:#f7c600;border-radius:50%;display:flex;justify-content:center;align-items:center;font-size:22px;color:black;font-weight:bold}
-.input-voz{position:absolute;bottom:8px;left:12px;right:12px;display:flex;justify-content:space-between;align-items:center}
-.input-voz span{font-size:15px}
-.mic{color:#f7c600;font-size:20px}
-.estado{color:#ff6a00;font-weight:bold;margin:12px;font-size:16px}
-.btn-mic{background:#e8e8e8;color:black;padding:16px;border-radius:14px;border:none;width:92%;font-weight:900;font-size:16px;margin:0 auto;display:block}
-.btn-text{background:#1a1a1a;color:#666;padding:14px;border-radius:12px;border:1px solid #333;width:92%;margin:10px auto;display:block;text-align:left}
-.btn-gen{background:#e8e8e8;color:black;padding:14px;border-radius:12px;border:none;width:92%;font-weight:900;margin:10px auto;display:block}
+#btnGif{width:96%;max-width:520px;margin:0 auto 12px auto;background:#FF6D00;color:#000;border:none;border-radius:0 0 20px 20px;padding:18px;font-size:20px;font-weight:900;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px}
+#texto{margin:10px auto;max-width:520px;background:#111;border-radius:10px;padding:10px;color:#FF6D00;font-weight:900;font-size:18px;min-height:44px}
+.btn{width:96%;max-width:520px;padding:16px;margin:7px auto;border:none;border-radius:14px;font-weight:900;font-size:16px;cursor:pointer;display:block}
+.btn-accion{background:#e0e0e0;color:#111}
+input{width:96%;max-width:520px;padding:14px;border-radius:12px;background:#111;color:#fff;border:2px solid #333;font-size:16px;margin:6px auto;display:block}
+.box{width:96%;max-width:520px;margin:14px auto;background:#111;border:1px solid #2a2a2a;padding:16px;border-radius:16px;text-align:left}
 </style>
 </head>
 <body>
-<header>UNIVERSAL SOCIAL DYNAMICS</header>
-<div class="caja">
-<div class="top"><b>English</b><span>→</span><b>🇺🇸 American</b></div>
-<div class="aviso"><span>ⓘ</span> The latest Sign models are currently in research preview and are not available to the public.</div>
-<div id="canvasArea">
+<header>UNIVERSAL SOCIAL DYNAMICS - 100% PROPIO</header>
+
+<div id="videoBox">
 <canvas id="c"></canvas>
-<div class="btns-flot"><div class="circle">⇩</div><div class="circle">⤴</div></div>
-<div class="input-voz"><span>➕ &nbsp; <span id="textoActual">Hola, bienvenidos</span></span><span class="mic">🎙️</span></div>
+</div>
+
+<button id="btnGif" onclick="compartirVideo()">📤 COMPARTIR VIDEO COMO GIF</button>
+
+<div id="texto">Hola, bienvenidos</div>
+
+<input id="escribir" placeholder="Escribí: hola, gracias, casa">
+<button id="btnT" class="btn btn-accion" onclick="generarYGrabar()">GENERAR Y GRABAR LSA ▶️</button>
+<button id="grabar" class="btn btn-accion">🎤 HABLAR</button>
+
+<div class="box">
+<p style="text-align:center;font-weight:900">🙏 APOYÁ</p>
+<div style="display:flex;justify-content:space-between;background:#000;border:1px dashed #555;border-radius:12px;padding:12px;margin:10px 0">
+<span style="font-weight:900">MHERRERA4872.NX.ARS</span><button onclick="navigator.clipboard.writeText('MHERRERA4872.NX.ARS');alert('Copiado')" style="background:#FF6D00;border:none;padding:8px 12px;border-radius:8px;font-weight:900">COPIAR</button>
 </div>
 </div>
-<div class="estado" id="estado">Listo para traducir</div>
-<button class="btn-mic" onclick="escuchar()">🎤 TOCAR PARA HABLAR</button>
-<input class="btn-text" id="inputTexto" placeholder="Escribí: hola, gracias, por favor" onkeydown="if(event.key==='Enter')traducir()">
-<button class="btn-gen" onclick="traducir()">GENERAR VIDEO LSA ▶️</button>
+
 <script>
-const canvas=document.getElementById('c'); const ctx=canvas.getContext('2d');
-function resize(){canvas.width=canvas.parentElement.clientWidth*2;canvas.height=canvas.parentElement.clientHeight*2;} resize();
-let t=0; let animando=false;
-function dibujar(senna){
- ctx.clearRect(0,0,canvas.width,canvas.height);
- const cx=canvas.width/2, cy=canvas.height/2+20;
- // cabeza roja
- ctx.strokeStyle='#ff1a1a'; ctx.lineWidth=6; ctx.lineCap='round';
- ctx.beginPath(); ctx.roundRect(cx-55,cy-160,110,85,20); ctx.stroke();
- ctx.beginPath(); ctx.arc(cx-20,cy-135,8,0,6.28); ctx.stroke(); ctx.beginPath(); ctx.arc(cx+20,cy-135,8,0,6.28); ctx.stroke();
- ctx.beginPath(); ctx.arc(cx,cy-110,12,0,3.14); ctx.stroke();
- // cuerpo y piernas rojas
- ctx.beginPath(); ctx.moveTo(cx+50,cy-60); ctx.lineTo(cx+80,cy+80); ctx.lineTo(cx+20,cy-50); ctx.lineTo(cx-20,cy-50); ctx.lineTo(cx-80,cy+80); ctx.lineTo(cx-50,cy-60); ctx.stroke();
- // brazo derecho segun seña
- let ax=cx-50, ay=cy-60, bx=cx-90, by=cy+40, mx, my;
- if(senna==='hola'){ bx=cx-120+Math.sin(t)*20; by=cy-80+Math.cos(t)*10; }
- if(senna==='gracias'){ bx=cx-20; by=cy-100; }
- ctx.beginPath(); ctx.moveTo(ax,ay); ctx.lineTo(bx,by); ctx.lineTo(bx-20,by+80); ctx.stroke();
- // mano colores
- if(animando){
-   ctx.lineWidth=4;
-   const colores=['#ff0000','#00ff00','#0080ff','#ffff00','#ff00ff'];
-   for(let i=0;i<5;i++){
-     ctx.strokeStyle=colores[i];
-     ctx.beginPath(); ctx.moveTo(bx,by); ctx.lineTo(bx-25+Math.sin(t+i)*10,by-30-i*8); ctx.stroke();
-   }
- }
- t+=0.15;
+const canvas=document.getElementById('c');const ctx=canvas.getContext('2d');canvas.width=520;canvas.height=520;
+let frase="Hola, bienvenidos";let t=0;let grabando=false;
+function dibujar(time){
+  t=time;
+  ctx.fillStyle="#000";ctx.fillRect(0,0,520,520);
+  let mov=Math.sin(time/200)*35;let mov2=Math.cos(time/180)*30;
+  ctx.strokeStyle="#FF3B30";ctx.lineWidth=8;ctx.lineCap="round";
+  ctx.beginPath();ctx.arc(260,110,50,0,Math.PI*2);ctx.stroke();
+  ctx.fillStyle="#FF3B30";ctx.beginPath();ctx.arc(240,105,7,0,Math.PI*2);ctx.arc(280,105,7,0,Math.PI*2);ctx.fill();
+  ctx.strokeStyle="#FF3B30";ctx.beginPath();ctx.moveTo(260,160);ctx.lineTo(260,340);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(260,190);ctx.lineTo(150+mov,270+mov2);ctx.lineTo(130+mov,330);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(260,190);ctx.lineTo(370+mov2,270+mov);ctx.lineTo(390+mov2,330);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(260,340);ctx.lineTo(200,460);ctx.moveTo(260,340);ctx.lineTo(320,460);ctx.stroke();
+  ctx.fillStyle="#FFD600";ctx.beginPath();ctx.arc(130+mov,340,18,0,Math.PI*2);ctx.arc(390+mov2,340,18,0,Math.PI*2);ctx.fill();
+  ctx.fillStyle="rgba(255,255,255,0.2)";ctx.font="900 16px sans-serif";ctx.fillText(frase.substring(0,30),20,500);
+  requestAnimationFrame(dibujar);
 }
-setInterval(()=>dibujar('idle'),33);
-const dic={'hola':'hola','bienvenidos':'hola','gracias':'gracias','por favor':'gracias','como':'hola','estas':'hola'};
-let cola=[], idx=0, timer=null;
-function traducir(){
- clearInterval(timer); let txt=document.getElementById('inputTexto').value || document.getElementById('textoActual').innerText;
- if(!txt) txt='Hola, bienvenidos';
- document.getElementById('textoActual').innerText=txt;
- cola=txt.toLowerCase().replace(/[.,]/g,'').split(' ').filter(x=>x); idx=0; animando=true; siguiente();
+requestAnimationFrame(dibujar);
+
+let mediaRecorder;let chunks=[];let videoBlob=null;
+function generarYGrabar(){
+  let txt=document.getElementById('escribir').value||"Hola";
+  frase=txt;document.getElementById('texto').innerText=txt;
+  // Grabar 3 segundos del canvas
+  let stream=canvas.captureStream(30);
+  chunks=[];mediaRecorder=new MediaRecorder(stream,{mimeType:'video/webm'});
+  mediaRecorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)};
+  mediaRecorder.onstop=()=>{
+    videoBlob=new Blob(chunks,{type:'video/webm'});
+    document.getElementById('btnGif').innerText="✅ VIDEO LISTO - TOCA PARA COMPARTIR COMO GIF";
+    document.getElementById('btnGif').style.background="#00D26A";
+  };
+  mediaRecorder.start();
+  setTimeout(()=>mediaRecorder.stop(),3500);
+  document.getElementById('btnGif').innerText="⏺️ GRABANDO 3 SEG...";
 }
-function siguiente(){
- if(idx>=cola.length){ document.getElementById('estado').innerText='Listo para traducir'; animando=false; return; }
- let p=cola[idx]; let s=dic[p]||'hola';
- document.getElementById('estado').innerText='Traduciendo: '+p.toUpperCase()+' → '+s.toUpperCase();
- dibujar(s);
- idx++; timer=setTimeout(siguiente,1200);
+
+async function compartirVideo(){
+  if(!videoBlob){
+    alert("Primero apretá GENERAR Y GRABAR");
+    return;
+  }
+  let file=new File([videoBlob],"universal-lsa.webm",{type:"video/webm"});
+  // Intento de compartir como archivo real (se ve como video/gif en WhatsApp)
+  if(navigator.canShare && navigator.canShare({files:[file]})){
+    try{
+      await navigator.share({files:[file],title:"Universal LSA",text:frase});
+      return;
+    }catch(e){}
+  }
+  // Fallback: descarga el video y vos lo mandas como video
+  let a=document.createElement('a');a.href=URL.createObjectURL(videoBlob);a.download="lsa-"+Date.now()+".webm";a.click();
+  alert("Se descargó el video. Ahora andá a WhatsApp y mandalo como VIDEO, se va a ver como GIF moviéndose.");
 }
-function escuchar(){
- const rec=new (window.SpeechRecognition||window.webkitSpeechRecognition)();
- rec.lang='es-AR'; rec.onresult=e=>{
-   let txt=e.results[0][0].transcript;
-   document.getElementById('inputTexto').value=txt;
-   document.getElementById('textoActual').innerText=txt;
-   traducir();
- }; rec.start();
- document.getElementById('estado').innerText='Escuchando...';
-}
-dibujar('idle');
+
+let rec=null;try{rec=new(window.SpeechRecognition||window.webkitSpeechRecognition)();rec.lang='es-AR'}catch{}
+if(rec){rec.onresult=e=>{document.getElementById('escribir').value=e.results[0][0].transcript;generarYGrabar()};document.getElementById('grabar').onclick=()=>{try{rec.start()}catch{}};}
 </script>
 </body>
 </html>
