@@ -2,79 +2,124 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Universal - Traductor LSA</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UNIVERSAL SOCIAL DYNAMICS</title>
 <style>
-*{box-sizing:border-box;font-family:sans-serif;margin:0;padding:0}
-body{background:#000;color:#fff;text-align:center;padding-bottom:20px}
-header{background:#ddd;color:#111;padding:12px;font-weight:bold}
-#videoBox{position:relative;width:96%;max-width:520px;height:520px;margin:10px auto;background:#000;border:4px solid #fff;border-radius:18px;overflow:hidden}
-#videoBox iframe{width:100%;height:110%;border:none;margin-top:-30px;filter:contrast(180%) brightness(130%)}
-#overlayBotones{position:absolute;bottom:8px;right:8px;display:flex;gap:8px}
-.btnCirculo{width:48px;height:48px;border-radius:50%;border:none;background:#FFD600;color:#000;font-size:22px;font-weight:bold;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px #000}
-.btn{padding:14px;width:96%;max-width:520px;margin:6px auto;border:none;border-radius:12px;font-size:16px;font-weight:bold;display:block;cursor:pointer}
-.btn1{background:#e0e0e0;color:#111}
-.aliasBox{display:flex;justify-content:space-between;align-items:center;background:#111;border:1px dashed #555;border-radius:10px;padding:10px;margin:8px 0}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#000;color:#fff;text-align:center}
+.caja{margin:8px;border:3px solid #fff;border-radius:20px;overflow:hidden;background:#000;position:relative}
+.top{display:flex;justify-content:space-around;padding:12px;background:#111;color:#FFC400;font-weight:900}
+.aviso{background:#111;color:#ddd;font-size:13px;padding:10px;text-align:left;border-top:1px solid #222;border-bottom:1px solid #222}
+#canvasWrap{height:420px;background:#000;position:relative}
+canvas{width:100%;height:100%}
+.btns{position:absolute;right:10px;bottom:60px;display:flex;gap:10px}
+.bola{width:52px;height:52px;background:#FFC400;border-radius:50%;display:flex;justify-content:center;align-items:center;color:#000;font-size:24px;border:none;cursor:pointer}
+.frases{position:absolute;bottom:5px;left:10px;right:10px;display:flex;justify-content:space-between;align-items:center}
+.naranja{color:#FF6A00;font-weight:900;padding:10px;font-size:16px;min-height:40px}
+.btn{width:96%;max-width:520px;margin:8px auto;padding:18px;border:none;border-radius:14px;font-weight:900;font-size:16px;display:block;cursor:pointer}
+.btn-gris{background:#EAEAEA;color:#111}
+input{width:96%;max-width:520px;margin:8px auto;padding:16px;border-radius:12px;background:#111;color:#fff;border:1px solid #333;display:block}
+#status{color:#FF6A00;font-weight:bold;margin:6px}
 </style>
 </head>
 <body>
-<header>UNIVERSAL SOCIAL DYNAMICS</header>
-
-<div id="videoBox">
-  <iframe id="avatar" src="https://sign.mt/?text=Hola,%20bienvenidos&lang=ase"></iframe>
-  <div id="overlayBotones">
-    <button class="btnCirculo" onclick="descargarFrase()" title="Descargar">⬇️</button>
-    <button class="btnCirculo" onclick="compartirFrase()" title="Compartir">🔗</button>
-  </div>
+<div class="caja">
+<div class="top"><span>English</span><span>→</span><span>🇺🇸 American</span></div>
+<div class="aviso">ⓘ The latest Sign models are currently in research preview and are not available to the public.</div>
+<div id="canvasWrap">
+<canvas id="c"></canvas>
+<div class="btns">
+<button class="bola" onclick="descargarVideo()">⬇️</button>
+<button class="bola" onclick="compartirVideoDirecto()">↗️</button>
+</div>
+<div class="frases"><span style="color:#FF6A00">+</span><span id="txtShow" style="font-size:14px;text-align:left;flex:1;padding-left:8px">El aprendizaje es un tesoro que seguirá a su dueño a cualquier lugar</span><span>🎙️</span></div>
+</div>
 </div>
 
-<p id="texto" style="color:#FF6D00;font-weight:bold;margin:6px">Hola, bienvenidos</p>
+<div id="status" class="naranja">El aprendizaje es un tesoro que seguirá a su dueño a cualquier lugar</div>
 
-<button id="grabar" class="btn btn1">🎤 TOCAR PARA HABLAR</button>
-<input id="escribir" style="width:96%;max-width:520px;padding:12px;border-radius:10px;background:#111;color:#fff;border:2px solid #444" placeholder="Escribí: hola, gracias">
-<button id="btnT" class="btn btn1">GENERAR VIDEO LSA ▶️</button>
-
-<div style="width:96%;max-width:520px;margin:10px auto;background:#111;padding:12px;border-radius:12px;text-align:left">
-<p style="text-align:center;font-weight:bold">🙏 APOYÁ EL PROYECTO</p>
-
-<div class="aliasBox">
-<span id="a1" style="font-weight:bold;font-size:14px">MHERRERA4872.NX.ARS</span>
-<button onclick="copiar('MHERRERA4872.NX.ARS')" style="background:#FF6D00;color:#fff;border:none;padding:8px 12px;border-radius:8px;font-weight:bold">COPIAR</button>
-</div>
-<div class="aliasBox">
-<span id="a2" style="font-weight:bold;font-size:14px">MHERRERA8437.NX.USD</span>
-<button onclick="copiar('MHERRERA8437.NX.USD')" style="background:#00D26A;color:#fff;border:none;padding:8px 12px;border-radius:8px;font-weight:bold">COPIAR</button>
-</div>
-
-<button onclick="compartirFrase()" class="btn" style="background:#25D366;color:white;margin-top:12px">📤 COMPARTIR CON WHATSAPP / INSTAGRAM</button>
-<p id="ok" style="text-align:center;color:#0f0;font-size:12px;display:none">✅ Copiado!</p>
-</div>
+<button class="btn btn-gris" onclick="escuchar()">🎤 TOCAR PARA HABLAR</button>
+<input id="inputTxt" placeholder="Escribí tu frase acá">
+<button class="btn btn-gris" onclick="generarYGrabar()">GENERAR VIDEO LSA ▶️</button>
 
 <script>
-let ultima="Hola, bienvenidos";
-function generar(f){if(!f)return;ultima=f;document.getElementById('texto').innerText=f;document.getElementById('avatar').src="https://sign.mt/?text="+encodeURIComponent(f)+"&lang=ase";}
+const canvas=document.getElementById('c');const ctx=canvas.getContext('2d');
+function ajustar(){canvas.width=canvas.parentElement.clientWidth*2;canvas.height=canvas.parentElement.clientHeight*2} ajustar();
+let t=0, fraseActual="El aprendizaje es un tesoro", anim=false;
+let mediaRecorder, chunks=[], videoBlob=null, grabando=false;
 
-function copiar(t){navigator.clipboard.writeText(t);let o=document.getElementById('ok');o.innerText="✅ Copiado: "+t;o.style.display='block';setTimeout(()=>o.style.display='none',2000);}
-
-function compartirFrase(){
-  let url="https://marcooo85.github.io/universal-social-dynamics/";
-  let txt="Mirá este traductor LSA: '"+ultima+"' - Probalo acá: "+url;
-  if(navigator.share){
-    navigator.share({title:"Traductor LSA",text:txt,url:url});
-  } else {
-    window.open("https://wa.me/?text="+encodeURIComponent(txt),"_blank");
+function dibujar(){
+  ctx.fillStyle="#000";ctx.fillRect(0,0,canvas.width,canvas.height);
+  const cx=canvas.width/2, cy=canvas.height/2-20;
+  ctx.strokeStyle="#FF1A1A";ctx.lineWidth=7;ctx.lineCap="round";
+  // cabeza
+  ctx.beginPath();ctx.roundRect(cx-60,cy-150,120,90,25);ctx.stroke();
+  ctx.beginPath();ctx.arc(cx-22,cy-120,8,0,7);ctx.stroke();ctx.beginPath();ctx.arc(cx+22,cy-120,8,0,7);ctx.stroke();
+  ctx.beginPath();ctx.arc(cx,cy-95,12,0,3.2);ctx.stroke();
+  // cuerpo
+  ctx.beginPath();ctx.moveTo(cx,cy-60);ctx.lineTo(cx,cy+90);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx,cy-40);ctx.lineTo(cx-110+Math.sin(t/12)*15,cy+20);ctx.lineTo(cx-90+Math.sin(t/10)*10,cy+120);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx,cy-40);ctx.lineTo(cx+110,cy+20);ctx.lineTo(cx+90,cy+120);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx,cy+90);ctx.lineTo(cx-60,cy+210);ctx.moveTo(cx,cy+90);ctx.lineTo(cx+60,cy+210);ctx.stroke();
+  // mano colores si anima
+  if(anim){
+    let hx=cx-90+Math.sin(t/10)*10, hy=cy+120;
+    const cols=["#FF0000","#00FF00","#0080FF","#FFFF00","#FF00FF"];
+    for(let i=0;i<5;i++){ctx.strokeStyle=cols[i];ctx.lineWidth=5;ctx.beginPath();ctx.moveTo(hx,hy);ctx.lineTo(hx-20+i*10+Math.sin(t/8+i)*12,hy-40-i*6);ctx.stroke();}
   }
+  t++;
+  requestAnimationFrame(dibujar);
+}
+dibujar();
+
+function generarYGrabar(){
+  let txt=document.getElementById('inputTxt').value.trim();
+  if(!txt) txt=document.getElementById('txtShow').innerText;
+  fraseActual=txt;
+  document.getElementById('txtShow').innerText=txt;
+  document.getElementById('status').innerText="⏺️ GRABANDO VIDEO 3 SEG...";
+
+  chunks=[];let stream=canvas.captureStream(30);
+  mediaRecorder=new MediaRecorder(stream,{mimeType:'video/webm;codecs=vp9'});
+  mediaRecorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)};
+  mediaRecorder.onstop=()=>{
+    videoBlob=new Blob(chunks,{type:'video/webm'});
+    document.getElementById('status').innerText="✅ VIDEO LISTO - AHORA TOCA COMPARTIR ↗️";
+    document.getElementById('status').style.color="#00FF66";
+  };
+  anim=true; mediaRecorder.start();
+  setTimeout(()=>{mediaRecorder.stop();anim=false;},3200);
 }
 
-function descargarFrase(){
-  let blob=new Blob(["Frase LSA: "+ultima+"\nLink: https://marcooo85.github.io/universal-social-dynamics/"],{type:"text/plain"});
-  let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download="frase-lsa.txt";a.click();
-  alert("Se descargó la frase: "+ultima);
+async function compartirVideoDirecto(){
+  if(!videoBlob){alert("Primero tocá GENERAR VIDEO LSA");return;}
+  const file=new File([videoBlob],"universal-lsa.webm",{type:"video/webm"});
+  // ESTO COMPARTE EL VIDEO DIRECTO, NO EL LINK
+  if(navigator.canShare && navigator.canShare({files:[file]})){
+    try{ await navigator.share({files:[file]}); return; }catch(e){console.log(e)}
+  }
+  // Fallback descarga
+  descargarVideo();
 }
 
-let rec=null;try{rec=new(window.SpeechRecognition||window.webkitSpeechRecognition)();rec.lang='es-AR'}catch{}
-if(rec){rec.onresult=e=>generar(e.results[0][0].transcript);document.getElementById('grabar').onclick=()=>{try{rec.start()}catch{}};}
-document.getElementById('btnT').onclick=()=>generar(document.getElementById('escribir').value);
+function descargarVideo(){
+  if(!videoBlob){alert("Primero generá el video");return;}
+  let url=URL.createObjectURL(videoBlob);
+  let a=document.createElement('a');a.href=url;a.download="UNIVERSAL-LSA-"+Date.now()+".webm";a.click();
+}
+
+function escuchar(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){alert("Tu navegador no tiene micro");return;}
+  let rec=new SR();rec.lang="es-AR";
+  rec.onresult=e=>{
+    let txt=e.results[0][0].transcript;
+    document.getElementById('inputTxt').value=txt;
+    document.getElementById('txtShow').innerText=txt;
+    generarYGrabar();
+  };
+  rec.start();document.getElementById('status').innerText="🎤 Escuchando...";
+}
 </script>
 </body>
 </html>
