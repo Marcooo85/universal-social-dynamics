@@ -49,80 +49,11 @@ function dibujar(){
   ctx.fillStyle="#000";ctx.fillRect(0,0,800,1040);
   const cx=400, cy=280;
   ctx.strokeStyle="#E10600";ctx.lineWidth=8;ctx.lineCap="round";ctx.lineJoin="round";
-  // CARA COMO EN TU FOTO 23:16
-  ctx.beginPath();ctx.moveTo(cx-80,cy-90);ctx.bezierCurveTo(cx-80,cy-160,cx+80,cy-160,cx+80,cy-90);ctx.bezierCurveTo(cx+80,cy-20,cx-80,cy-90);ctx.stroke();
+  ctx.beginPath();ctx.moveTo(cx-80,cy-90);ctx.bezierCurveTo(cx-80,cy-160,cx+80,cy-90);ctx.bezierCurveTo(cx+80,cy-20,cx-80,cy-90);ctx.stroke();
   ctx.lineWidth=7;
   ctx.beginPath();ctx.moveTo(cx-55,cy-85);ctx.lineTo(cx-15,cy-85);ctx.lineWidth=8;ctx.stroke();
   ctx.beginPath();ctx.moveTo(cx+15,cy-85);ctx.lineTo(cx+55,cy-85);ctx.stroke();
   ctx.lineWidth=5;
   ctx.beginPath();ctx.ellipse(cx-30,cy-60,18,10,0,0,7);ctx.stroke();
   ctx.beginPath();ctx.ellipse(cx+30,cy-60,18,10,0,0,7);ctx.stroke();
-  ctx.fillStyle="#E10600";ctx.beginPath();ctx.ellipse(cx-30,cy-58,5,3,0,0,7);ctx.fill();ctx.beginPath();ctx.ellipse(cx+30,cy-58,5,3,0,0,7);ctx.fill();
-  ctx.strokeStyle="#E10600";ctx.lineWidth=6;ctx.beginPath();ctx.ellipse(cx,cy-15,22,14,0,0.2,3);ctx.stroke();
-  // CUERPO CUADRADO COMO EN LA FOTO
-  ctx.lineWidth=8;ctx.strokeStyle="#E10600";
-  ctx.beginPath();ctx.moveTo(cx-160,cy+60);ctx.lineTo(cx+160,cy+60);ctx.lineTo(cx+130,cy+400);ctx.moveTo(cx-160,cy+60);ctx.lineTo(cx-190,cy+380);ctx.stroke();
-  // BRAZO IZQUIERDO CON MANO COLORES
-  let hx=cx-160, hy=cy+60;
-  if(anim){hx=cx-160+Math.sin(t/12)*10;hy=cy+60+Math.cos(t/12)*8;}
-  ctx.beginPath();ctx.moveTo(hx,hy);ctx.lineTo(hx-70,hy+140);ctx.lineTo(hx-90,hy+260);ctx.stroke();
-  if(true){
-    const cxM=hx-90, cyM=hy+120;
-    const dedos=[
-      {c:"#00D8FF",dx:-30,dy:-60},{c:"#00FF66",dx:-10,dy:-80},{c:"#0066FF",dx:10,dy:-80},{c:"#FFD500",dx:25,dy:-50},{c:"#FF8A00",dx:15,dy:-10}
-    ];
-    // palma
-    ctx.strokeStyle="#FFD500";ctx.lineWidth=5;
-    ctx.beginPath();ctx.moveTo(cxM-15,cyM);ctx.lineTo(cxM+15,cyM-10);ctx.lineTo(cxM+20,cyM+20);ctx.lineTo(cxM-5,cyM+30);ctx.closePath();ctx.stroke();
-    dedos.forEach(d=>{
-      ctx.strokeStyle=d.c;ctx.lineWidth=7;
-      ctx.beginPath();ctx.moveTo(cxM,cyM);ctx.lineTo(cxM+d.dx+(anim?Math.sin(t/10+d.dx)*8:0),cyM+d.dy);ctx.stroke();
-    });
-  }
-  // brazo derecho
-  ctx.strokeStyle="#E10600";ctx.lineWidth=8;
-  ctx.beginPath();ctx.moveTo(cx+160,cy+60);ctx.lineTo(cx+200,cy+180);ctx.lineTo(cx+130,cy+400);ctx.stroke();
-  t++;requestAnimationFrame(dibujar);
-}
-dibujar();
-
-function generarVideo(){
-  let txt=document.getElementById('entrada').value||document.getElementById('fraseBox').innerText;
-  document.getElementById('fraseBox').innerText=txt;
-  document.getElementById('estado').innerText="⏺️ GRABANDO VIDEO 3.5s - ESPERA...";
-  chunks=[];let stream=canvas.captureStream(30);
-  recorder=new MediaRecorder(stream,{mimeType:'video/webm;codecs=vp9'});
-  recorder.ondataavailable=e=>{if(e.data.size>0)chunks.push(e.data)};
-  recorder.onstop=()=>{
-    videoBlob=new Blob(chunks,{type:'video/webm'});
-    document.getElementById('estado').innerText="✅ VIDEO LISTO - TOCA ↗️ Y SE MANDA EL VIDEO DIRECTO";
-    document.getElementById('estado').style.color="#00FF88";
-  };
-  anim=true;recorder.start();
-  setTimeout(()=>{recorder.stop();anim=false;},3500);
-}
-
-async function compartirVideo(){
-  if(!videoBlob){alert("Primero toca GENERAR VIDEO LSA");return;}
-  const file=new File([videoBlob,"universal-lsa.webm",{type:"video/webm"}][0]? [videoBlob] : [],"universal-lsa.webm",{type:"video/webm"});
-  // ARCHIVO REAL, NO LINK
-  const realFile=new File([videoBlob],"universal-lsa.webm",{type:"video/webm"});
-  if(navigator.canShare && navigator.canShare({files:[realFile]})){
-    try{await navigator.share({files:[realFile]});return;}catch(e){}
-  }
-  descargarVideo();
-}
-function descargarVideo(){
-  if(!videoBlob){alert("Primero generá");return;}
-  let url=URL.createObjectURL(videoBlob);
-  let a=document.createElement('a');a.href=url;a.download="UNIVERSAL-LSA.webm";a.click();
-}
-function escuchar(){
-  let SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR)return;let r=new SR();r.lang="es-AR";
-  r.onresult=e=>{let tx=e.results[0][0].transcript;document.getElementById('entrada').value=tx;document.getElementById('fraseBox').innerText=tx;generarVideo();};
-  r.start();document.getElementById('estado').innerText="🎤 Escuchando...";
-}
-</script>
-</body>
-</html>
+  ctx.fillStyle="#E10600";ctx.beginPath();ctx.ellipse(cx-30,cy-58,5,3,0,0,7);
